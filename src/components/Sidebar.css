@@ -1,0 +1,25 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 16rem;
+    height: calc(100vh - 20px);
+    margin: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: #e6e6e6 solid 2px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    overflow: hidden;
+}
+
+.sidebar-item {
+    justify-content: center;
+    align-items: flex-start;
+    background-color: white;
+    {/* transition: max-height 0.3s ease-out; */}
+
+}

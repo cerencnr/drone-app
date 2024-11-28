@@ -1,0 +1,21 @@
+.app {
+    display: flex;
+    position: relative;
+}
+
+.map-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    gap: 10px;
+}
+
+.leaflet-container {
+    border-radius: 5px;
+    border: #e6e6e6 solid 2px;
+    position: relative;
+}

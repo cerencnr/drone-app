@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/api/api.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/axios.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/gps-api.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/models.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/return-api.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/AddWaypointButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/CurrentStatus.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Menu.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Menu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/MissionStatus.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SearchBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Sidebar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Sidebar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Telemetry.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Telemetry.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/WaypointList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useGPS.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useReturnToLaunch.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Map/Map.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Map/Map.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/calculateDistance.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/notify.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2o1VXfLNTFuIC3PgodXdusc6xlh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/cerencinar/Desktop/Development/drone-app&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/cerencinar/Desktop/Development/drone-app/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/Map" />
+      <recent name="$PROJECT_DIR$/src/pages" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-WS-243.21565.180" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="" />
+      <created>1730037109800</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730037109800</updated>
+      <workItem from="1730037110831" duration="7319000" />
+      <workItem from="1730204906729" duration="615000" />
+      <workItem from="1730205536078" duration="529000" />
+      <workItem from="1730206075145" duration="6091000" />
+      <workItem from="1730230475372" duration="66000" />
+      <workItem from="1730230547380" duration="8709000" />
+      <workItem from="1730269965512" duration="762000" />
+      <workItem from="1730309751973" duration="33000" />
+      <workItem from="1730309802782" duration="3534000" />
+      <workItem from="1730374048358" duration="224000" />
+      <workItem from="1730449146524" duration="246000" />
+      <workItem from="1730556101465" duration="111000" />
+      <workItem from="1730913478113" duration="3331000" />
+      <workItem from="1731009439370" duration="1063000" />
+      <workItem from="1731010506263" duration="8382000" />
+      <workItem from="1731052554684" duration="1905000" />
+      <workItem from="1731145443771" duration="2920000" />
+      <workItem from="1731519610296" duration="7881000" />
+      <workItem from="1731532801300" duration="660000" />
+      <workItem from="1731602193272" duration="125000" />
+      <workItem from="1732106730451" duration="4770000" />
+      <workItem from="1732121195827" duration="741000" />
+      <workItem from="1732122038269" duration="2221000" />
+      <workItem from="1732124268317" duration="1799000" />
+      <workItem from="1732126071256" duration="3330000" />
+      <workItem from="1732188228685" duration="84000" />
+      <workItem from="1732210440976" duration="1583000" />
+      <workItem from="1732213699767" duration="3054000" />
+      <workItem from="1732218154549" duration="1098000" />
+      <workItem from="1732219257376" duration="4325000" />
+      <workItem from="1732223594774" duration="1337000" />
+      <workItem from="1732262483246" duration="1180000" />
+      <workItem from="1732273015383" duration="263000" />
+      <workItem from="1732273288055" duration="5244000" />
+      <workItem from="1732298405541" duration="432000" />
+      <workItem from="1732298859920" duration="495000" />
+      <workItem from="1732299358616" duration="4017000" />
+      <workItem from="1732629170798" duration="2075000" />
+      <workItem from="1732824043492" duration="1122000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
