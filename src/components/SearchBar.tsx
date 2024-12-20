@@ -42,6 +42,7 @@ const SearchBar: React.FC<{ onLocationFound: (position: [number, number]) => voi
             if (data.length > 0) {
                 const { lat, lon } = data[0];
                 onLocationFound([parseFloat(lat), parseFloat(lon)]);
+                setAddress(""); // Clear the search bar
             } else {
                 alert("Address not found.");
             }

@@ -8,6 +8,9 @@ import SearchBar from '../../components/SearchBar';
 import useGPS from "../../hooks/useGPS";
 import Menu from '../../components/Menu';
 import Sidebar from '../../components/Sidebar';
+import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
+import StopRoundedIcon from '@mui/icons-material/StopRounded';
+import Tooltip from "antd/es/tooltip";
 
 const markerIcon = new L.Icon({
     iconUrl: require("leaflet/dist/images/marker-icon.png"),
@@ -185,14 +188,16 @@ const Map: React.FC = () => {
                             }}
                         >
                             <Popup>
-                                <div style={{display: "flex", flexDirection: "column"}}>
+                                <div style={{display: "flex", flexDirection: "column", alignItems: "center", gap:"2px"}}>
                                     {position[0].toFixed(5)}, {position[1].toFixed(5)}
                                     <br/>
                                     <div style={{display: "flex", justifyContent: "space-between"}}>
-                                        <button onClick={() => deleteMarker(index)}
-                                                style={{background: "transparent", border: "none", padding: "2px"}}>
-                                            <WrongLocationOutlinedIcon/>
-                                        </button>
+                                        <Tooltip placement={"left"} title={"Delete Marker"}>
+                                            <button onClick={() => deleteMarker(index)}
+                                                    style={{background: "transparent", border: "none", padding: "2px"}}>
+                                                <WrongLocationOutlinedIcon style={{color: "red"}}/>
+                                            </button>
+                                        </Tooltip>
                                     </div>
                                 </div>
                             </Popup>
@@ -215,9 +220,20 @@ const Map: React.FC = () => {
                             top: '20px',
                             left: '50%',
                             transform: 'translateX(-50%)',
-                            zIndex: "2000"
+                            zIndex: "2000",
+                            height: "2.2rem",
+                            backgroundColor: "white",
+                            borderRadius: "5px",
                         }}>
-                    {isTracking ? "Stop Tracking" : "Start Tracking"}
+                    {isTracking ?
+                        <div style={{display:"flex", alignItems: "center"}}>
+                            <StopRoundedIcon />
+                            <p style={{margin:"0", padding:"2px"}}>Halt Session</p>
+                        </div> :
+                        <div style={{display:"flex", alignItems: "center"}}>
+                            <PlayArrowRoundedIcon />
+                            <p style={{margin:"0", padding:"2px"}}>Start Session</p>
+                        </div>}
                 </button>
             </div>
         </div>

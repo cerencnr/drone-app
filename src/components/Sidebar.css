@@ -9,7 +9,7 @@
     background-color: #f0f0f0;
     box-sizing: border-box;
     border-radius: 5px;
-    border: #e6e6e6 solid 2px;
+    border: #f0f0f0 solid 2px;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
     flex-shrink: 0; /* Prevent sidebar from shrinking */
