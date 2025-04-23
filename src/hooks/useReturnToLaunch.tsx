@@ -1,43 +1,30 @@
-import { useState } from "react";
-import useSWR from "swr";
-import { getReturnToLaunch } from "../api/return-api";
+import {useState} from "react";
+import {postReturnToLaunch} from "../api/return-api";
 
 export default function useReturnToLaunch() {
-    const {
-        data: response,
-        isLoading,
-        error,
-        mutate,
-    } = useSWR("api_return_to_launch", async () => await getReturnToLaunch(), {
-            suspense: false,
-            revalidateOnMount: false, // Prevent automatic revalidation on mount
-            revalidateIfStale: false, // Disable stale revalidation
-            revalidateOnFocus: false, // Disable revalidation on window focus
-            revalidateOnReconnect: false, // Disable revalidation on reconnect
-        }
-    );
-
-    const [isTriggering, setIsTriggering] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<Error | null>(null);
 
     const triggerReturnToLaunch = async () => {
-        if (isTriggering) {
+        if (isLoading) {
             console.log("Trigger already in progress, skipping.");
             return null;
         }
 
-        setIsTriggering(true);
+        setIsLoading(true);
+        setError(null);
+
         try {
-            const response = await getReturnToLaunch();
-            console.log("response", response);
-            console.log("API response:", response.data);
-            return response.data;
-        } catch (err) {
-            console.error("Error fetching return to launch:", err);
+            return await postReturnToLaunch();
+        } catch (err: any) {
+            console.error("Error posting return to launch:", err);
+            setError(err);
             throw err;
         } finally {
-            setIsTriggering(false);
+            setIsLoading(false);
         }
     };
+
 
     return {
         isLoading,

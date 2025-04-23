@@ -3,10 +3,11 @@ import List from 'antd/es/list';
 
 interface WaypointListProps {
     markers: [number, number][];
-    onWaypointClick?: (position: [number, number]) => void; // Optional click handler
+    onWaypointClick?: (position: [number, number]) => void;
+    isLoading: boolean;
 }
 
-const WaypointList: React.FC<WaypointListProps> = ({ markers, onWaypointClick }) => {
+const WaypointList: React.FC<WaypointListProps> = ({ markers, onWaypointClick, isLoading }) => {
     return (
         <List
             style={{
@@ -14,9 +15,10 @@ const WaypointList: React.FC<WaypointListProps> = ({ markers, onWaypointClick })
                 maxHeight: "30rem",
                 borderRadius: "5px",
                 backgroundColor: "white",
-                boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.2)",
-                width: "22rem"
+                width: "22rem",
+                border: "none"
             }}
+            loading={isLoading}
             itemLayout="horizontal"
             size="small"
             header={<div>Waypoints</div>}

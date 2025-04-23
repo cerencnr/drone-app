@@ -27,8 +27,6 @@ interface MenuProps {
 }
 
 const Menu: React.FC<MenuProps> = ({
-                                       isAdding,
-                                       handleToggleAdding,
                                        isExpanded,
                                        toggleExpand,
                                        markers,
@@ -59,26 +57,6 @@ const Menu: React.FC<MenuProps> = ({
     return (
         <div className="menu">
             <div className="menu-items">
-                <Tooltip placement={"left"} title={"Add Waypoint"}>
-                    <span>
-                        <AddWaypointButton isAdding={isAdding} handleToggleAdding={handleToggleAdding} />
-                    </span>
-                </Tooltip>
-
-                <div style={{ display: "flex", gap: "10px" }}>
-                    <div className={`waypoint-list-container ${isExpanded ? 'expanded' : ''}`}>
-                        {isExpanded && (
-                            <WaypointList markers={markers} onWaypointClick={focusOnWaypoint} />
-                        )}
-                    </div>
-                    <Tooltip placement={"left"} title={"See All Waypoints"}>
-                        <span>
-                            <button onClick={toggleExpand} className={`menu-button${isExpanded ? '-active' : ''}`}>
-                                {isExpanded ? <VisibilityOffOutlinedIcon /> : <RemoveRedEyeOutlinedIcon />}
-                            </button>
-                        </span>
-                    </Tooltip>
-                </div>
 
                 <Tooltip placement={"left"} title={"Toggle Area"}>
                     <button onClick={createPolygon} className="menu-button">

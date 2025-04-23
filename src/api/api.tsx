@@ -10,11 +10,20 @@ export const get = async (location: string, params = {}) => {
         });
 };
 
-export const put = async (location: string, body: any, params = {}) => {
+export const post = async (location: string, body: any, params = {}) => {
     return axios
-        .put(location, body, { params })
+        .post(location, body, { params })
         .then((response) => response)
         .catch((error) => {
             console.log("api error: ", error);
         });
 };
+
+export const remove = async (location: string, params = {}) => {
+    return axios
+        .delete(location, { params })
+        .then((response) => response)
+        .catch((error) => {
+            console.log("api error: ", error);
+        });
+}

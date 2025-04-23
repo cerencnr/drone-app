@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import { getGPS } from "../api/gps-api";
+import {getGPS, getMockGPS} from "../api/gps-api";
 
 export default function useGPS(isTracking: boolean) {
     const {
@@ -8,82 +8,51 @@ export default function useGPS(isTracking: boolean) {
         isLoading,
         error,
         mutate,
-    } = useSWR("api_gps", async () => await getGPS(), {
+    } = useSWR("api_gps", async () => await getMockGPS(), {
         refreshInterval: isTracking ? 250 : 0, //0.25 seconds
         dedupingInterval: 0,
     });
 
-    const [battery, setBattery] = useState<number | null>(null);
+    const [armed, setArmed] = useState<boolean | null>(null);
 
-    const [globalPosition, setGlobalPosition] = useState<{
-        alt: number;
-        eph: number;
-        epv: number;
-        lat: number;
-        lon: number;
+    const [battery, setBattery] = useState<{
+        remaining_percent: number;
+        voltage: number;
     } | null>(null);
 
-    const [timestamp, setTimeStamp] = useState<string | null>(null);
+    const [flightMode, setFlightMode] = useState<number | null>(null);
 
-    const [vehicleOdometry, setVehicleOdometry] = useState<{
-        position: {
-            x: number;
-            y: number;
-            z: number;
-        }
-        speed: number;
-        velocity: {
-            x: number;
-            y: number;
-            z: number;
-        }
+    const [position, setPosition] = useState<{
+        absolute_altitude: number;
+        latitude: number;
+        longitude: number;
+        relative_altitude: number;
     } | null>(null);
-
-    const [vehicleStatus, setVehicleStatus] = useState<{
-        arming_state: number;
-        nav_state: number;
-    } | null>(null);
-
 
     useEffect(() => {
-        console.log("response: ", response);
         if (response) {
-            setBattery(response.battery);
-            setGlobalPosition({
-                alt: response.global_position.alt,
-                eph: response.global_position.eph,
-                epv: response.global_position.epv,
-                lat: response.global_position.lat,
-                lon: response.global_position.lon,
-            });
-            setTimeStamp(response.timestamp);
+            console.log("API gps response:", response);
+            setArmed(response.armed ?? null);
+            setBattery(response.battery ? {
+                remaining_percent: response.battery.remaining_percent,
+                voltage: response.battery.voltage,
+            } : null);
+            setFlightMode(response.flightMode ?? null);
 
-            setVehicleOdometry({
-                position: {
-                    x: response.vehicle_odometry.position.x,
-                    y: response.vehicle_odometry.position.y,
-                    z: response.vehicle_odometry.position.z,
-                },
-                speed: response.vehicle_odometry.speed,
-                velocity: {
-                    x: response.vehicle_odometry.velocity.x,
-                    y: response.vehicle_odometry.velocity.y,
-                    z: response.vehicle_odometry.velocity.z,
-                }
-            });
-            setVehicleStatus({
-                arming_state: response.vehicle_status.arming_state,
-                nav_state: response.vehicle_status.nav_state
-            })
+            setPosition(response.position ? {
+                absolute_altitude: response.position.absolute_altitude,
+                latitude: response.position.latitude,
+                longitude: response.position.longitude,
+                relative_altitude: response.position.relative_altitude,
+            } : null);
         }
     }, [response]);
 
     return {
+        armed,
         battery,
-        globalPosition,
-        timestamp,
-        vehicleOdometry,
-        vehicleStatus,
+        flightMode,
+        position,
         isLoading,
         error,
         mutate

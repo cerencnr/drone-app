@@ -1,46 +1,62 @@
 import React, { useState } from "react";
-import CurrentStatus from "./CurrentStatus";
-import MissionStatus from "./MissionStatus";
 import './Sidebar.css';
+import NavigationRoundedIcon from '@mui/icons-material/NavigationRounded';
+import Tooltip from "antd/es/tooltip";
+import AddWaypointButton from "./AddWaypointButton";
+import WaypointList from "./WaypointList";
+import {clearMission} from "../api/mission-api";
 
 interface SidebarProps {
-    globalPosition: {
-        alt: number;
-        eph: number;
-        epv: number;
-        lat: number;
-        lon: number;
-    } | null;
-    vehicleOdometry: {
-        position: {
-            x: number;
-            y: number;
-            z: number;
-        };
-        speed: number;
-        velocity: {
-            x: number;
-            y: number;
-            z: number;
-        }
-    } | null;
-    battery: number | null;
+    isAdding: boolean;
+    handleToggleAdding: () => void;
+    markers: [number, number][];
+    focusOnWaypoint: (position: [number, number]) => void;
+    isLoading: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ globalPosition, vehicleOdometry, battery }) => {
-    const [isCurrentStatusExpanded, setIsCurrentStatusExpanded] = useState(true);
-    const [isMissionStatusExpanded, setIsMissionStatusExpanded] = useState(true);
+const Sidebar: React.FC<SidebarProps> = ({ isAdding,
+                                           handleToggleAdding,
+                                           markers,
+                                           focusOnWaypoint,
+                                           isLoading}) => {
+    const [isSectionExpanded, setIsSectionExpanded] = useState(true);
 
-    const toggleCurrentStatusExpand = () => {
-        setIsCurrentStatusExpanded((prev) => !prev);
-    };
 
-    const toggleMissionStatusExpand = () => {
-        setIsMissionStatusExpanded((prev) => !prev);
-    };
+    const toggleExpandSection = () => {
+        setIsSectionExpanded((prev) => !prev);
+    }
+
+    const removeAllMissions= async () => {
+        await clearMission();
+    }
 
     return (
         <div className="sidebar">
+            <div className="sidebar-item" onClick={toggleExpandSection}>
+                <Tooltip title={"Plan"} placement={"right"}>
+                    <NavigationRoundedIcon />
+                </Tooltip>
+            </div>
+            {isSectionExpanded && (
+                <div className="section"> {/* mission plan section */}
+                    <p style={{fontWeight: "bold", fontSize: "0.8rem", paddingTop: "0", margin: "0"}}>Create Plan</p>
+                    <AddWaypointButton isAdding={isAdding} handleToggleAdding={handleToggleAdding}/>
+                    <button style={{border: "none",
+                                    borderRadius: "5px",
+                                    backgroundColor: "white"}} onClick={removeAllMissions}>clear all</button>
+                    <WaypointList markers={markers} onWaypointClick={focusOnWaypoint} isLoading={isLoading}/>
+                </div>
+            )}
+
+        </div>
+    );
+};
+
+export default Sidebar;
+
+
+/*
+   <div className="sidebar">
             <CurrentStatus
                 isExpanded={isCurrentStatusExpanded}
                 toggleExpand={toggleCurrentStatusExpand}
@@ -53,7 +69,4 @@ const Sidebar: React.FC<SidebarProps> = ({ globalPosition, vehicleOdometry, batt
                 toggleExpand={toggleMissionStatusExpand}
             />
         </div>
-    );
-};
-
-export default Sidebar;
+ */

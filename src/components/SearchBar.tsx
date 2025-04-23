@@ -5,7 +5,7 @@ const searchBarStyle: CSSProperties = {
     position: "absolute",
     backgroundColor: "white",
     borderRadius: "5px",
-    top: "10px",
+    bottom: "10px",
     left: "10px",
     zIndex: 1000,
     display: "flex",

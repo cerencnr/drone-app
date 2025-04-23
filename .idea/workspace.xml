@@ -4,11 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="">
+    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="improve ui/ux">
+      <change afterPath="$PROJECT_DIR$/src/api/mission-api.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useMission.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/axios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/axios.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/gps-api.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/gps-api.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/return-api.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/return-api.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AddWaypointButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddWaypointButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SearchBar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Map/Map.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Map/Map.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Telemetry.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Telemetry.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/WaypointList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/WaypointList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useGPS.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useGPS.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useReturnToLaunch.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useReturnToLaunch.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Map/Map.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,14 +33,26 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript JSX File" />
-        <option value="TypeScript File" />
         <option value="CSS File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;cerencnr&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:cerencnr/drone-app.git&quot;,
+    &quot;accountId&quot;: &quot;780cb30e-f116-4d35-ba56-3847b6bcb89f&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -116,11 +141,55 @@
       <workItem from="1733424387989" duration="893000" />
       <workItem from="1733426165407" duration="1811000" />
       <workItem from="1734632999158" duration="607000" />
-      <workItem from="1734691627092" duration="1821000" />
+      <workItem from="1734691627092" duration="3071000" />
+      <workItem from="1734886875145" duration="1534000" />
+      <workItem from="1734966811154" duration="15436000" />
+      <workItem from="1735235616270" duration="9190000" />
+      <workItem from="1735282059610" duration="1494000" />
+      <workItem from="1735508034142" duration="613000" />
+      <workItem from="1735806425395" duration="8000" />
+      <workItem from="1743839388288" duration="1313000" />
+      <workItem from="1744796458245" duration="1918000" />
     </task>
+    <task id="LOCAL-00001" summary="improve ui/ux">
+      <option name="closed" value="true" />
+      <created>1734697667580</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1734697667580</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="improve ui/ux" />
+    <option name="LAST_COMMIT_MESSAGE" value="improve ui/ux" />
   </component>
 </project>
