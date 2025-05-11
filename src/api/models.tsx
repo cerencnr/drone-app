@@ -14,20 +14,16 @@ export type GPSResponse = {
 }
 
 export type MissionResponse = {
-    acceptance_radius_m: number;
-    camera_action: string;
-    camera_photo_distance_m: number;
-    camera_photo_interval_s: number;
-    gimbal_pitch_deg: number;
-    gimbal_yaw_deg: number;
-    is_fly_through: boolean;
-    latitude_deg: number;
-    loiter_time_s: number;
-    longitude_deg: number;
-    relative_altitude_m: number;
-    speed_m_s: number;
-    vehicle_action: string;
-    yaw_deg: number;
+    altitude: number,
+    camera_action: string,
+    gimbal_pitch: number,
+    gimbal_yaw: number,
+    is_fly_through: boolean,
+    latitude: number,
+    loiter_time: number,
+    longitude: number,
+    speed: number,
+    yaw: number
 }
 
 export type MissionItemResponse = {

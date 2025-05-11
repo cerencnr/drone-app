@@ -8,7 +8,7 @@ export default function useGPS(isTracking: boolean) {
         isLoading,
         error,
         mutate,
-    } = useSWR("api_gps", async () => await getMockGPS(), {
+    } = useSWR("api_gps", async () => await getGPS(), {
         refreshInterval: isTracking ? 250 : 0, //0.25 seconds
         dedupingInterval: 0,
     });

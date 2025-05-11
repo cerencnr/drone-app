@@ -20,7 +20,7 @@ export const startMission = async () => {
 
 // POST /start-lawnmower: start lawnmower mission
 export const startLawnmowerMission = async () => {
-    return api.post("/start-lawnmower", {});
+    return api.post("/start_lawnmower", {});
 }
 
 export const generateLawnmower = async (
@@ -30,5 +30,5 @@ export const generateLawnmower = async (
 }
 
 export const clearMission = async () => {
-    return api.remove("/clear-mission");
+    return api.remove("/clear_mission");
 }

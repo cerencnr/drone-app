@@ -8,12 +8,10 @@ import SearchBar from '../../components/SearchBar';
 import useGPS from "../../hooks/useGPS";
 import Menu from '../../components/Menu';
 import Sidebar from '../../components/Sidebar';
-import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
-import StopRoundedIcon from '@mui/icons-material/StopRounded';
 import Tooltip from "antd/es/tooltip";
 import useMission from "../../hooks/useMission";
-import { uploadMission } from "../../api/mission-api";
-import {MissionResponse} from "../../api/models";
+import useMarkers from "../../hooks/useMarkers";
+import TrackingButton from "../../components/TrackingButton";
 
 
 const markerIcon = new L.Icon({
@@ -42,38 +40,17 @@ const MapEvents: React.FC<{ addMarker: (pos: [number, number]) => void; isAdding
 };
 
 const Map: React.FC = () => {
+    const { markers, addMarker, deleteMarker, updateMarker } = useMarkers();
     const [isTracking, setIsTracking] = useState(false);
     const { position } = useGPS(isTracking);
     const [dronePosition, setDronePosition] = useState<[number, number]>([0, 0]);
     const [droneTrajectory, setDroneTrajectory] = useState<[number, number][]>([]);
-    const [markers, setMarkers] = useState<[number, number][]>([]);
     const [isAdding, setIsAdding] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const mapRef = useRef<L.Map | null>(null);
     const [showPolygon, setShowPolygon] = useState(false);
     const [isFocusing, setIsFocusing] = useState(false);
     const { data: missions, isLoading } = useMission();
-
-
-    useEffect(() => {
-        console.log("Missions:", missions);
-
-        if (missions && Array.isArray(missions)) {
-            console.log("Setting mission markers");
-            const missionMarkers = missions.map((item: { latitude_deg: number; longitude_deg: number }) => {
-                if (item.latitude_deg != null && item.longitude_deg != null) {
-                    return [item.latitude_deg, item.longitude_deg] as [number, number];
-                } else {
-                    console.warn("Mission item missing coordinates:", item);
-                    return null;
-                }
-            }).filter((marker: [number, number] | null): marker is [number, number] => marker !== null);
-
-            setMarkers(missionMarkers);
-        } else {
-            console.warn("Missions is not an array or is undefined:", missions);
-        }
-    }, [missions]);
 
 
     useEffect(() => {
@@ -103,82 +80,17 @@ const Map: React.FC = () => {
     };
 
     const onLocationFound = (position: [number, number]) => {
-        if (mapRef.current) {
-            mapRef.current.flyTo(position, 16);
-            setMarkers((prevMarkers) => [...prevMarkers, position]);
-        }
-    };
-
-    const addMarker = async (position: [number, number]) => {
-        setMarkers((prevMarkers) => [...prevMarkers, position]);
-
-        // Create a new mission item with the new waypoint
-        const newMissionItem: MissionResponse = {
-            latitude_deg: position[0],
-            longitude_deg: position[1],
-            acceptance_radius_m: 0,
-            camera_action: "NONE",
-            camera_photo_distance_m: 0,
-            camera_photo_interval_s: 0,
-            gimbal_pitch_deg: 0,
-            gimbal_yaw_deg: 0,
-            is_fly_through: false,
-            loiter_time_s: 0,
-            relative_altitude_m: 0,
-            speed_m_s: 0,
-            vehicle_action: "NONE",
-            yaw_deg: 0,
-        };
-
-        const updatedMissions = missions ? [...missions, newMissionItem] : [newMissionItem];
-        const missionItemsObject = { mission_items: updatedMissions };
-
-        try {
-            await uploadMission(missionItemsObject);
-            console.log("updatedMissions:", missionItemsObject);
-        } catch (error) {
-            console.error("Failed to update mission:", error);
-        }
-    };
-
-    const deleteMarker = async (index: number) => {
-        setMarkers((prevMarkers) => {
-            const updatedMarkers = prevMarkers.filter((_, i) => i !== index);
-            if (updatedMarkers.length < 3 && showPolygon) {
-                setShowPolygon(false);
+        addMarker(position).then(
+            () => {
+                if (mapRef.current) {
+                    mapRef.current.flyTo(position, 16);
+                }
             }
-            return updatedMarkers;
-        });
-
-        const updatedMissions = markers.filter((_, i) => i !== index).map((position) => ({
-            latitude_deg: position[0],
-            longitude_deg: position[1],
-            acceptance_radius_m: 0,
-            camera_action: "NONE",
-            camera_photo_distance_m: 0,
-            camera_photo_interval_s: 0,
-            gimbal_pitch_deg: 0,
-            gimbal_yaw_deg: 0,
-            is_fly_through: false,
-            loiter_time_s: 0,
-            relative_altitude_m: 0,
-            speed_m_s: 0,
-            vehicle_action: "NONE",
-            yaw_deg: 0,
-        }));
-
-        const missionItemsObject = { mission_items: updatedMissions };
-
-        try {
-            await uploadMission(missionItemsObject);
-            console.log("updatedMissions:", missionItemsObject);
-        } catch (error) {
-            console.error("Failed to update mission:", error);
+        )
+        .catch((error) => {
+            console.error("Error adding marker:", error);
         }
-    };
-
-    const updateMarkerPosition = (index: number, position: [number, number]) => {
-        setMarkers((prevMarkers) => prevMarkers.map((marker, i) => (i === index ? position : marker)));
+        );
     };
 
     const handleToggleAdding = () => {
@@ -261,7 +173,7 @@ const Map: React.FC = () => {
                                 dragend: (e) => {
                                     const marker = e.target;
                                     const newPosition: [number, number] = [marker.getLatLng().lat, marker.getLatLng().lng];
-                                    updateMarkerPosition(index, newPosition);
+                                    updateMarker(index, newPosition);
                                 },
                                 click: () => {
                                     if (isAdding) {
@@ -297,27 +209,7 @@ const Map: React.FC = () => {
                     </Marker>
                     <Polyline positions={droneTrajectory} color="blue"/>
                 </MapContainer>
-                <button onClick={toggleTracking} // halt or start session
-                        style={{
-                            position: 'absolute',
-                            top: '20px',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            zIndex: "2000",
-                            height: "2.2rem",
-                            backgroundColor: "white",
-                            borderRadius: "5px",
-                        }}>
-                    {isTracking ?
-                        <div style={{display:"flex", alignItems: "center"}}>
-                            <StopRoundedIcon />
-                            <p style={{margin:"0", padding:"2px"}}>Halt Session</p>
-                        </div> :
-                        <div style={{display:"flex", alignItems: "center"}}>
-                            <PlayArrowRoundedIcon />
-                            <p style={{margin:"0", padding:"2px"}}>Start Session</p>
-                        </div>}
-                </button>
+                <TrackingButton isTracking={isTracking} toggleTracking={toggleTracking} />
             </div>
         </div>
     );
