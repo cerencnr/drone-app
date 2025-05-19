@@ -1,15 +1,15 @@
 export type GPSResponse = {
     armed: boolean;
     battery: {
-        remaining_percent: number;
+        remainingPercent: number;
         voltage: number;
     }
     flight_mode: number;
     position: {
-        absolute_altitude: number;
+        absoluteAltitude: number;
         latitude: number;
         longitude: number;
-        relative_altitude: number;
+        relativeAltitude: number;
     }
 }
 

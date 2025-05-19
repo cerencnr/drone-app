@@ -1,43 +1,38 @@
 import React from "react";
-import AddWaypointButton from './AddWaypointButton';
-import WaypointList from './WaypointList';
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import PentagonOutlinedIcon from '@mui/icons-material/PentagonOutlined';
 import PolylineOutlinedIcon from '@mui/icons-material/PolylineOutlined';
 import Tooltip from "antd/es/tooltip";
 import UndoRoundedIcon from '@mui/icons-material/UndoRounded';
 import CenterFocusWeakRoundedIcon from '@mui/icons-material/CenterFocusWeakRounded';
 import useReturnToLaunch from "../hooks/useReturnToLaunch";
-import { notifyReturnError, notifyReturnSuccess } from "../utils/notify";
+import {notifyReturnError, notifyReturnSuccess} from "../utils/notify";
 import './Menu.css';
+import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
+import Telemetry from "./Telemetry";
+import {GPSResponse} from "../api/models";
 
 interface MenuProps {
-    isAdding: boolean;
-    handleToggleAdding: () => void;
-    isExpanded: boolean;
-    toggleExpand: () => void;
-    markers: [number, number][];
-    focusOnWaypoint: (position: [number, number]) => void;
     showPolygon: boolean;
     createPolygon: () => void;
     isFocusing: boolean;
     toggleFocus: () => void;
     isTracking: boolean;
+    toggleTelemetry: () => void;
+    isTelemetryExpanded: boolean;
+    position: GPSResponse['position'] | null
 }
 
 const Menu: React.FC<MenuProps> = ({
-                                       isExpanded,
-                                       toggleExpand,
-                                       markers,
-                                       focusOnWaypoint,
                                        showPolygon,
                                        createPolygon,
                                        isFocusing,
                                        toggleFocus,
-                                       isTracking
+                                       isTracking,
+                                       toggleTelemetry,
+                                       isTelemetryExpanded,
+                                       position,
                                    }) => {
-    const { triggerReturnToLaunch } = useReturnToLaunch();
+    const {triggerReturnToLaunch} = useReturnToLaunch();
 
     const handleReturnToLaunch = async () => {
         try {
@@ -54,34 +49,48 @@ const Menu: React.FC<MenuProps> = ({
         }
     };
 
+
     return (
         <div className="menu">
             <div className="menu-items">
 
-                <Tooltip placement={"left"} title={"Toggle Area"}>
-                    <button onClick={createPolygon} className="menu-button">
-                        {showPolygon ? <PentagonOutlinedIcon /> : <PolylineOutlinedIcon />}
-                    </button>
-                </Tooltip>
+                <div className="menu-items">
+                    <Tooltip placement={"left"} title={"Toggle Area"}>
+                        <button onClick={createPolygon} className="menu-button">
+                            {showPolygon ? <PentagonOutlinedIcon/> : <PolylineOutlinedIcon/>}
+                        </button>
+                    </Tooltip>
 
-                <Tooltip placement={"left"} title={"Return to Base"}>
-                    <span>
+                    <Tooltip placement={"left"} title={"Return to Base"}>
                         <button className="menu-button" onClick={handleReturnToLaunch} disabled={!isTracking}>
                             <UndoRoundedIcon/>
                         </button>
-                    </span>
+                    </Tooltip>
+
+                    <Tooltip placement={"left"} title={isFocusing ? "Stop Focusing on Drone" : "Focus on Drone"}>
+                        <button className="menu-button" onClick={toggleFocus}
+                                style={isFocusing ? {backgroundColor: "#c9c9c9"} : {}}>
+                            <CenterFocusWeakRoundedIcon/>
+                        </button>
+                    </Tooltip>
+                </div>
+
+                <Tooltip placement={"left"} title={"Telemetry Data"}>
+                    <button className="menu-button" onClick={toggleTelemetry}
+                            style={(isFocusing ? {backgroundColor: "#c9c9c9"} : {})}>
+                        <RocketLaunchRoundedIcon/>
+                    </button>
+                    {isTelemetryExpanded && position && (
+                        <div
+                            style={{position: "relative", top: "-390%", left: "-590%"}}>
+                            <Telemetry position={position}/>
+                        </div>
+                    )}
                 </Tooltip>
 
-                <Tooltip placement={"left"} title={isFocusing ? "Stop Focusing on Drone" : "Focus on Drone"}>
-                    <span>
-                        <button className="menu-button" onClick={toggleFocus} style={isFocusing ? { backgroundColor: "#c9c9c9" } : {}}>
-                            <CenterFocusWeakRoundedIcon />
-                        </button>
-                    </span>
-                </Tooltip>
             </div>
         </div>
     );
 };
 
-export default Menu;
+    export default Menu;

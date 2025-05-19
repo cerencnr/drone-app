@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import {getGPS, getMockGPS} from "../api/gps-api";
+import {getGPS} from "../api/gps-api";
 
 export default function useGPS(isTracking: boolean) {
     const {
@@ -16,17 +16,17 @@ export default function useGPS(isTracking: boolean) {
     const [armed, setArmed] = useState<boolean | null>(null);
 
     const [battery, setBattery] = useState<{
-        remaining_percent: number;
+        remainingPercent: number;
         voltage: number;
     } | null>(null);
 
     const [flightMode, setFlightMode] = useState<number | null>(null);
 
     const [position, setPosition] = useState<{
-        absolute_altitude: number;
+        absoluteAltitude: number;
         latitude: number;
         longitude: number;
-        relative_altitude: number;
+        relativeAltitude: number;
     } | null>(null);
 
     useEffect(() => {
@@ -34,16 +34,16 @@ export default function useGPS(isTracking: boolean) {
             console.log("API gps response:", response);
             setArmed(response.armed ?? null);
             setBattery(response.battery ? {
-                remaining_percent: response.battery.remaining_percent,
+                remainingPercent: response.battery.remainingPercent,
                 voltage: response.battery.voltage,
             } : null);
             setFlightMode(response.flightMode ?? null);
 
             setPosition(response.position ? {
-                absolute_altitude: response.position.absolute_altitude,
+                absoluteAltitude: response.position.absoluteAltitude,
                 latitude: response.position.latitude,
                 longitude: response.position.longitude,
-                relative_altitude: response.position.relative_altitude,
+                relativeAltitude: response.position.relativeAltitude,
             } : null);
         }
     }, [response]);

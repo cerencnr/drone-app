@@ -4,17 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="feat: added waypoint api upload">
-      <change afterPath="$PROJECT_DIR$/src/components/TrackingButton.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hooks/useMarkers.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hooks/useUploadMission.tsx" afterDir="false" />
+    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="feat: added telemetry data component">
+      <change afterPath="$PROJECT_DIR$/src/hooks/useStartLawnmowerMission.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useStartMission.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/axios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/axios.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/mission-api.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/mission-api.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/gps-api.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/gps-api.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/models.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Menu.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Telemetry.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Telemetry.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Telemetry.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Telemetry.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hooks/useGPS.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useGPS.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useMission.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useMission.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useMission.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useMission.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Map/Map.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/notify.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/notify.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +62,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/refactor&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/cerencinar/Desktop/Development/drone-app&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -147,6 +151,9 @@
       <workItem from="1745822468380" duration="1181000" />
       <workItem from="1746727079847" duration="4309000" />
       <workItem from="1746894122546" duration="7762000" />
+      <workItem from="1747563865322" duration="1388000" />
+      <workItem from="1747611090099" duration="770000" />
+      <workItem from="1747668712644" duration="3951000" />
     </task>
     <task id="LOCAL-00001" summary="improve ui/ux">
       <option name="closed" value="true" />
@@ -197,6 +204,7 @@
     <MESSAGE value="improve ui/ux" />
     <MESSAGE value="feat: added lawnmower endpoints" />
     <MESSAGE value="feat: added waypoint api upload" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: added waypoint api upload" />
+    <MESSAGE value="feat: added telemetry data component" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: added telemetry data component" />
   </component>
 </project>

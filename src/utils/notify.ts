@@ -15,6 +15,11 @@ const RETURN_TO_LAUNCH_ERROR_MESSAGE = {
     description: "Error returning to launch.",
 };
 
+const TELEMETRY_WARNING_MESSAGE = {
+    message: "Telemetry Warning",
+    description: "Telemetry data is not available.",
+}
+
 export function notifyReturnSuccess() {
     notification.success({
         ...DEFAULT_NOTIFICATION_CONFIG,
@@ -26,5 +31,12 @@ export function notifyReturnError() {
     notification.error({
         ...DEFAULT_NOTIFICATION_CONFIG,
         ...RETURN_TO_LAUNCH_ERROR_MESSAGE,
+    });
+}
+
+export function notifyTelemetryWarning() {
+    notification.error({
+        ...DEFAULT_NOTIFICATION_CONFIG,
+        ...TELEMETRY_WARNING_MESSAGE,
     });
 }

@@ -12,6 +12,7 @@ import Tooltip from "antd/es/tooltip";
 import useMission from "../../hooks/useMission";
 import useMarkers from "../../hooks/useMarkers";
 import TrackingButton from "../../components/TrackingButton";
+import {notifyTelemetryWarning} from "../../utils/notify";
 
 
 const markerIcon = new L.Icon({
@@ -46,11 +47,11 @@ const Map: React.FC = () => {
     const [dronePosition, setDronePosition] = useState<[number, number]>([0, 0]);
     const [droneTrajectory, setDroneTrajectory] = useState<[number, number][]>([]);
     const [isAdding, setIsAdding] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(false);
     const mapRef = useRef<L.Map | null>(null);
     const [showPolygon, setShowPolygon] = useState(false);
     const [isFocusing, setIsFocusing] = useState(false);
     const { data: missions, isLoading } = useMission();
+    const [ isTelemetryExpanded, setIsTelemetryExpanded ] = useState(false);
 
 
     useEffect(() => {
@@ -97,10 +98,6 @@ const Map: React.FC = () => {
         setIsAdding((prev) => !prev);
     };
 
-    const toggleExpand = () => {
-        setIsExpanded((prev) => !prev);
-    };
-
     const focusOnWaypoint = (position: [number, number]) => {
         if (mapRef.current) {
             mapRef.current.flyTo(position, 16);
@@ -119,6 +116,15 @@ const Map: React.FC = () => {
         setIsFocusing((prev) => !prev);
     };
 
+    const toggleTelemetry = () => {
+        if (!position) {
+            notifyTelemetryWarning();
+            return;
+        }
+        setIsTelemetryExpanded((prev) => !prev);
+    }
+
+
     return (
         <div className="app">
             <Sidebar isAdding={isAdding}
@@ -129,17 +135,14 @@ const Map: React.FC = () => {
             <div className="map-container">
 
                 <Menu
-                    isAdding={isAdding}
-                    handleToggleAdding={handleToggleAdding}
-                    isExpanded={isExpanded}
-                    toggleExpand={toggleExpand}
-                    markers={markers}
-                    focusOnWaypoint={focusOnWaypoint}
                     showPolygon={showPolygon}
                     createPolygon={createPolygon}
                     isFocusing={isFocusing}
                     toggleFocus={toggleFocus}
                     isTracking={isTracking}
+                    toggleTelemetry={toggleTelemetry}
+                    isTelemetryExpanded={isTelemetryExpanded}
+                    position={position}
                 />
                 <MapContainer
                     center={[37.9838, 23.7275]}

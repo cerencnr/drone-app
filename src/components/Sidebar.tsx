@@ -5,6 +5,8 @@ import Tooltip from "antd/es/tooltip";
 import AddWaypointButton from "./AddWaypointButton";
 import WaypointList from "./WaypointList";
 import {clearMission} from "../api/mission-api";
+import useStartMission from "../hooks/useStartMission";
+import useStartLawnmowerMission from "../hooks/useStartLawnmowerMission";
 
 interface SidebarProps {
     isAdding: boolean;
@@ -20,14 +22,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
                                            focusOnWaypoint,
                                            isLoading}) => {
     const [isSectionExpanded, setIsSectionExpanded] = useState(true);
-
+    const {start: startGenericMission} = useStartMission();
+    const {start: startLawnmowerMission} = useStartLawnmowerMission();
 
     const toggleExpandSection = () => {
         setIsSectionExpanded((prev) => !prev);
     }
 
-    const removeAllMissions= async () => {
-        await clearMission();
+    const removeAllMissions = async () => {
+        try {
+            await clearMission();
+        } catch (err) {
+            console.error("Clear mission failed:", err);
+        }
     }
 
     return (
@@ -41,9 +48,32 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
                 <div className="section"> {/* mission plan section */}
                     <p style={{fontWeight: "bold", fontSize: "0.8rem", paddingTop: "0", margin: "0"}}>Create Plan</p>
                     <AddWaypointButton isAdding={isAdding} handleToggleAdding={handleToggleAdding}/>
-                    <button style={{border: "none",
-                                    borderRadius: "5px",
-                                    backgroundColor: "white"}} onClick={removeAllMissions}>clear all</button>
+                    <button
+                        style={{
+                            border: "none",
+                            borderRadius: "5px",
+                            backgroundColor: "white",
+                            fontWeight: "bold"
+                        }}
+                        onClick={removeAllMissions}>
+                        Clear All
+                    </button>
+                    <button style={{
+                        border: "none",
+                        borderRadius: "5px",
+                        backgroundColor: "white",
+                        fontWeight: "bold"
+                    }}
+                            onClick={startGenericMission}>Start Generic Mission
+                    </button>
+                    <button style={{
+                        border: "none",
+                        borderRadius: "5px",
+                        backgroundColor: "white",
+                        fontWeight: "bold"
+                    }}
+                            onClick={startLawnmowerMission}>Start Lawnmower Mission
+                    </button>
                     <WaypointList markers={markers} onWaypointClick={focusOnWaypoint} isLoading={isLoading}/>
                 </div>
             )}
@@ -53,20 +83,3 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
 };
 
 export default Sidebar;
-
-
-/*
-   <div className="sidebar">
-            <CurrentStatus
-                isExpanded={isCurrentStatusExpanded}
-                toggleExpand={toggleCurrentStatusExpand}
-                globalPosition={globalPosition}
-                vehicleOdometry={vehicleOdometry}
-                battery={battery}
-            />
-            <MissionStatus
-                isExpanded={isMissionStatusExpanded}
-                toggleExpand={toggleMissionStatusExpand}
-            />
-        </div>
- */
