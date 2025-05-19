@@ -43,7 +43,7 @@ const MapEvents: React.FC<{ addMarker: (pos: [number, number]) => void; isAdding
 const Map: React.FC = () => {
     const { markers, addMarker, deleteMarker, updateMarker } = useMarkers();
     const [isTracking, setIsTracking] = useState(false);
-    const { position } = useGPS(isTracking);
+    const { position, battery, flightMode, armed } = useGPS(isTracking);
     const [dronePosition, setDronePosition] = useState<[number, number]>([0, 0]);
     const [droneTrajectory, setDroneTrajectory] = useState<[number, number][]>([]);
     const [isAdding, setIsAdding] = useState(false);
@@ -131,7 +131,12 @@ const Map: React.FC = () => {
                      handleToggleAdding={handleToggleAdding}
                      markers={markers}
                      focusOnWaypoint={focusOnWaypoint}
-                     isLoading={isLoading}/>
+                     isLoading={isLoading}
+                     battery={battery}
+                     flightMode={flightMode}
+                     armed={armed}
+                     position={position}
+            />
             <div className="map-container">
 
                 <Menu

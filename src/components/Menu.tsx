@@ -76,8 +76,7 @@ const Menu: React.FC<MenuProps> = ({
                 </div>
 
                 <Tooltip placement={"left"} title={"Telemetry Data"}>
-                    <button className="menu-button" onClick={toggleTelemetry}
-                            style={(isFocusing ? {backgroundColor: "#c9c9c9"} : {})}>
+                    <button className="menu-button" onClick={toggleTelemetry}>
                         <RocketLaunchRoundedIcon/>
                     </button>
                     {isTelemetryExpanded && position && (

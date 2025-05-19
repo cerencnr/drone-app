@@ -5,20 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="feat: added telemetry data component">
-      <change afterPath="$PROJECT_DIR$/src/hooks/useStartLawnmowerMission.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hooks/useStartMission.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/horizontalDistanceTraveled.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/gps-api.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/gps-api.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/models.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CurrentStatus.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CurrentStatus.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Telemetry.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Telemetry.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Telemetry.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Telemetry.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useGPS.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useGPS.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useMission.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useMission.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Map/Map.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/notify.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/notify.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/calculateDistance.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +44,9 @@
     &quot;accountId&quot;: &quot;780cb30e-f116-4d35-ba56-3847b6bcb89f&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -153,7 +150,7 @@
       <workItem from="1746894122546" duration="7762000" />
       <workItem from="1747563865322" duration="1388000" />
       <workItem from="1747611090099" duration="770000" />
-      <workItem from="1747668712644" duration="3951000" />
+      <workItem from="1747668712644" duration="7367000" />
     </task>
     <task id="LOCAL-00001" summary="improve ui/ux">
       <option name="closed" value="true" />
@@ -171,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745392474568</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat: added telemetry data component">
+      <option name="closed" value="true" />
+      <created>1747672866116</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747672866116</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -4,7 +4,7 @@ export type GPSResponse = {
         remainingPercent: number;
         voltage: number;
     }
-    flight_mode: number;
+    flightMode: number;
     position: {
         absoluteAltitude: number;
         latitude: number;

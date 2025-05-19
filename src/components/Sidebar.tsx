@@ -7,6 +7,9 @@ import WaypointList from "./WaypointList";
 import {clearMission} from "../api/mission-api";
 import useStartMission from "../hooks/useStartMission";
 import useStartLawnmowerMission from "../hooks/useStartLawnmowerMission";
+import RocketLaunchRoundedIcon from "@mui/icons-material/RocketLaunchRounded";
+import CurrentStatus from "./CurrentStatus";
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
 interface SidebarProps {
     isAdding: boolean;
@@ -14,19 +17,47 @@ interface SidebarProps {
     markers: [number, number][];
     focusOnWaypoint: (position: [number, number]) => void;
     isLoading: boolean;
+    armed: boolean | null;
+    position: {
+        absoluteAltitude: number;
+        latitude: number;
+        longitude: number;
+        relativeAltitude: number;
+    } | null;
+    flightMode: number | null;
+    battery: {
+        remainingPercent: number;
+        voltage: number;
+    } | null;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isAdding,
                                            handleToggleAdding,
                                            markers,
                                            focusOnWaypoint,
-                                           isLoading}) => {
-    const [isSectionExpanded, setIsSectionExpanded] = useState(true);
+                                           isLoading,
+                                           battery,
+                                           armed,
+                                           position,
+                                           flightMode
+}) => {
+    const [isMissionSectionExpanded, setIsMissionSectionExpanded] = useState(true);
+    const [isCurrentStatusSectionExpanded, setIsCurrentStatusSectionExpanded] = useState(true);
     const {start: startGenericMission} = useStartMission();
     const {start: startLawnmowerMission} = useStartLawnmowerMission();
 
-    const toggleExpandSection = () => {
-        setIsSectionExpanded((prev) => !prev);
+    const toggleExpandMissionSection = () => {
+        setIsMissionSectionExpanded((prev) => {
+            if (!prev) setIsCurrentStatusSectionExpanded(false);
+            return !prev;
+        });
+    }
+
+    const toggleExpandCurrentStatusSection = () => {
+        setIsCurrentStatusSectionExpanded((prev) => {
+            if (!prev) setIsMissionSectionExpanded(false);
+            return !prev;
+        });
     }
 
     const removeAllMissions = async () => {
@@ -39,30 +70,39 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
 
     return (
         <div className="sidebar">
-            <div className="sidebar-item" onClick={toggleExpandSection}>
+            <div className="sidebar-item" onClick={toggleExpandMissionSection}>
                 <Tooltip title={"Plan"} placement={"right"}>
-                    <NavigationRoundedIcon />
+                    <NavigationRoundedIcon/>
                 </Tooltip>
             </div>
-            {isSectionExpanded && (
+            {isMissionSectionExpanded && (
                 <div className="section"> {/* mission plan section */}
                     <p style={{fontWeight: "bold", fontSize: "0.8rem", paddingTop: "0", margin: "0"}}>Create Plan</p>
-                    <AddWaypointButton isAdding={isAdding} handleToggleAdding={handleToggleAdding}/>
-                    <button
-                        style={{
-                            border: "none",
-                            borderRadius: "5px",
-                            backgroundColor: "white",
-                            fontWeight: "bold"
-                        }}
-                        onClick={removeAllMissions}>
-                        Clear All
-                    </button>
+                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                        <AddWaypointButton isAdding={isAdding} handleToggleAdding={handleToggleAdding}/>
+                        <Tooltip title={"Remove All Missions"} placement={"right"}>
+                            <button
+                                style={{
+                                    border: "none",
+                                    borderRadius: "5px",
+                                    backgroundColor: "white",
+                                    fontWeight: "bold",
+                                    height: "2rem",
+                                    alignItems: "center",
+                                    display: "flex",
+                                }}
+                                onClick={removeAllMissions}>
+                                <DeleteForeverRoundedIcon/>
+                            </button>
+                        </Tooltip>
+                    </div>
+                    <WaypointList markers={markers} onWaypointClick={focusOnWaypoint} isLoading={isLoading}/>
                     <button style={{
                         border: "none",
                         borderRadius: "5px",
                         backgroundColor: "white",
-                        fontWeight: "bold"
+                        fontWeight: "bold",
+                        height: "2rem",
                     }}
                             onClick={startGenericMission}>Start Generic Mission
                     </button>
@@ -70,11 +110,29 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
                         border: "none",
                         borderRadius: "5px",
                         backgroundColor: "white",
-                        fontWeight: "bold"
+                        fontWeight: "bold",
+                        height: "2rem",
                     }}
                             onClick={startLawnmowerMission}>Start Lawnmower Mission
                     </button>
-                    <WaypointList markers={markers} onWaypointClick={focusOnWaypoint} isLoading={isLoading}/>
+                </div>
+            )}
+
+            <div className="sidebar-item" onClick={toggleExpandCurrentStatusSection}>
+                <Tooltip title={"Current Status"} placement={"right"}>
+                    <RocketLaunchRoundedIcon/>
+                </Tooltip>
+            </div>
+            {isCurrentStatusSectionExpanded && (
+                <div className="section">
+                    <p style={{fontWeight: "bold", fontSize: "0.8rem", paddingTop: "0", margin: "0"}}>Current Status</p>
+                    <CurrentStatus
+                        position={null}
+                        battery={battery}
+                        markers={markers}
+                        armed={false}
+                        flightMode={null}
+                    />
                 </div>
             )}
 
