@@ -19,7 +19,7 @@ interface MenuProps {
     isTracking: boolean;
     toggleTelemetry: () => void;
     isTelemetryExpanded: boolean;
-    position: GPSResponse['position'] | null
+    position: GPSResponse['drone']['position'] | null
 }
 
 const Menu: React.FC<MenuProps> = ({

@@ -13,6 +13,8 @@ import useMission from "../../hooks/useMission";
 import useMarkers from "../../hooks/useMarkers";
 import TrackingButton from "../../components/TrackingButton";
 import {notifyTelemetryWarning} from "../../utils/notify";
+import 'leaflet-rotatedmarker';
+import droneArrowhead from "../../assets/drone-arrowhead.svg";
 
 
 const markerIcon = new L.Icon({
@@ -25,7 +27,7 @@ const markerIcon = new L.Icon({
 });
 
 const droneIcon = new L.Icon({
-    iconUrl: "https://svgsilh.com/svg/2025680.svg",
+    iconUrl: droneArrowhead,
     iconSize: [50, 50],
     iconAnchor: [25, 25],
     popupAnchor: [0, -25],
@@ -43,7 +45,8 @@ const MapEvents: React.FC<{ addMarker: (pos: [number, number]) => void; isAdding
 const Map: React.FC = () => {
     const { markers, addMarker, deleteMarker, updateMarker } = useMarkers();
     const [isTracking, setIsTracking] = useState(false);
-    const { position, battery, flightMode, armed } = useGPS(isTracking);
+    //const { position, battery, flightMode, armed, heading } = useGPS(isTracking);
+    const { drone, rover } = useGPS(isTracking);
     const [dronePosition, setDronePosition] = useState<[number, number]>([0, 0]);
     const [droneTrajectory, setDroneTrajectory] = useState<[number, number][]>([]);
     const [isAdding, setIsAdding] = useState(false);
@@ -53,6 +56,15 @@ const Map: React.FC = () => {
     const { data: missions, isLoading } = useMission();
     const [ isTelemetryExpanded, setIsTelemetryExpanded ] = useState(false);
     const [hidePolylineTemporarily, setHidePolylineTemporarily] = useState(false);
+    const [arrowHeading, setArrowHeading] = useState(0);
+    const droneMarkerRef = useRef<L.Marker | null>(null);
+
+    useEffect(() => {
+        if (droneMarkerRef.current) {
+            (droneMarkerRef.current as any).setRotationAngle(arrowHeading);
+            (droneMarkerRef.current as any).setRotationOrigin("center center");
+        }
+    }, [drone?.heading]);
 
     const startSession = () => {
         setIsTracking(true);
@@ -60,12 +72,13 @@ const Map: React.FC = () => {
     };
 
     useEffect(() => {
-        if (position) {
-            const newDronePosition: [number, number] = [position?.latitude, position?.longitude];
+        if (drone?.position && drone?.heading) {
+            const newDronePosition: [number, number] = [drone?.position?.latitude, drone?.position?.longitude];
             setDronePosition(newDronePosition);
             setDroneTrajectory((prevTrajectory) => [...prevTrajectory, newDronePosition]);
+            setArrowHeading(drone?.heading ?? 0);
         }
-    }, [position]);
+    }, [drone?.position]);
 
     useEffect(() => {
         if (mapRef.current && dronePosition[0] !== 0 && dronePosition[1] !== 0 && isFocusing) {
@@ -129,7 +142,7 @@ const Map: React.FC = () => {
     };
 
     const toggleTelemetry = () => {
-        if (!position) {
+        if (!drone?.position) {
             notifyTelemetryWarning();
             return;
         }
@@ -144,10 +157,10 @@ const Map: React.FC = () => {
                      markers={markers}
                      focusOnWaypoint={focusOnWaypoint}
                      isLoading={isLoading}
-                     battery={battery}
-                     flightMode={flightMode}
-                     armed={armed}
-                     position={position}
+                     battery={drone?.battery ?? null}
+                     flightMode={drone?.flightMode ?? null}
+                     armed={drone?.armed ?? null}
+                     position={drone?.position ?? null}
                      onStartSession={startSession}
             />
             <div className="map-container">
@@ -160,7 +173,7 @@ const Map: React.FC = () => {
                     isTracking={isTracking}
                     toggleTelemetry={toggleTelemetry}
                     isTelemetryExpanded={isTelemetryExpanded}
-                    position={position}
+                    position={drone?.position ?? null}
                 />
                 <MapContainer
                     center={[37.9838, 23.7275]}
@@ -225,19 +238,21 @@ const Map: React.FC = () => {
                             </Popup>
                         </Marker>
                     ))}
-                    <Marker position={dronePosition} icon={droneIcon}>
+                    <Marker
+                        position={dronePosition}
+                        icon={droneIcon}
+                        ref={(ref) => {
+                            if (ref) droneMarkerRef.current = ref;
+                        }}
+                    >
                         <Popup>
-                            Drone Position
-                            <br/>
-                            {dronePosition && (
-                                <>
-                                    Latitude: {dronePosition[0]}
-                                    <br />
-                                    Longitude: {dronePosition[1]}
-                                </>
-                            )}
+                            Drone Position<br />
+                            Lat: {dronePosition[0]} <br />
+                            Lon: {dronePosition[1]} <br />
+                            Heading: {arrowHeading.toFixed(1)}°
                         </Popup>
                     </Marker>
+
                     <Polyline positions={droneTrajectory} color="blue"/>
                 </MapContainer>
                 <TrackingButton isTracking={isTracking} toggleTracking={toggleTracking} />

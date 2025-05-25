@@ -1,15 +1,34 @@
 export type GPSResponse = {
-    armed: boolean;
-    battery: {
-        remainingPercent: number;
-        voltage: number;
+    drone: {
+        armed: boolean;
+        battery: {
+            remainingPercent: number;
+            voltage: number;
+        }
+        flightMode: number;
+        heading: number;
+        position: {
+            absoluteAltitude: number;
+            latitude: number;
+            longitude: number;
+            relativeAltitude: number;
+        }
     }
-    flightMode: number;
-    position: {
-        absoluteAltitude: number;
-        latitude: number;
-        longitude: number;
-        relativeAltitude: number;
+
+    rover: {
+        armed: boolean;
+        battery: {
+            remainingPercent: number;
+            voltage: number;
+        }
+        flightMode: number;
+        heading: number;
+        position: {
+            absoluteAltitude: number;
+            latitude: number;
+            longitude: number;
+            relativeAltitude: number;
+        }
     }
 }
 

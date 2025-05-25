@@ -3,7 +3,7 @@ import Card from "antd/es/card";
 import { GPSResponse } from "../api/models";
 import './Telemetry.css';
 
-const Telemetry: React.FC<{ position: GPSResponse['position']}> = ({ position }) => {
+const Telemetry: React.FC<{ position: GPSResponse['drone']['position']}> = ({ position }) => {
     if (!position) {
         return <div>No telemetry data available.</div>;
     }

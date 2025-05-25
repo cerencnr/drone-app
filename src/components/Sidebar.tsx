@@ -15,6 +15,7 @@ import {
     notifyStartGenericMissionSuccess, notifyStartLawnmowerMissionError,
     notifyStartLawnmowerMissionSuccess
 } from "../utils/notify";
+import useMission from "../hooks/useMission";
 
 interface SidebarProps {
     isAdding: boolean;
@@ -52,6 +53,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
     const [isCurrentStatusSectionExpanded, setIsCurrentStatusSectionExpanded] = useState(false);
     const {start: startGenericMission} = useStartMission();
     const {start: startLawnmowerMission} = useStartLawnmowerMission();
+    const { mutate } = useMission();
 
     const toggleExpandMissionSection = () => {
         setIsMissionSectionExpanded((prev) => {
@@ -73,6 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
         } catch (err) {
             console.error("Clear mission failed:", err);
         }
+        mutate();
     }
 
     const handleStartGenericMission = async () => {
@@ -81,6 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
             if (response?.status === 200) {
                 notifyStartGenericMissionSuccess();
                 onStartSession();
+                mutate();
             } else {
                 notifyStartGenericMissionError();
             }
@@ -96,6 +100,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
             if (response?.status === 200) {
                 notifyStartLawnmowerMissionSuccess();
                 onStartSession();
+                mutate();
             } else {
                 notifyStartLawnmowerMissionError();
             }
