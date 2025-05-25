@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { startMission } from "../api/mission-api";
+import {useState} from "react";
+import {startMission} from "../api/mission-api";
 
 export default function useStartMission() {
     const [isStarting, setIsStarting] = useState(false);
@@ -9,10 +9,11 @@ export default function useStartMission() {
         setIsStarting(true);
         setError(null);
         try {
-            await startMission();
+            return await startMission();
         } catch (err) {
             console.error("Failed to start mission:", err);
             setError(err as Error);
+            throw err;
         } finally {
             setIsStarting(false);
         }

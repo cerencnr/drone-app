@@ -31,7 +31,7 @@ const WaypointList: React.FC<WaypointListProps> = ({ markers, onWaypointClick, i
                 >
                     <List.Item.Meta
                         title={`Waypoint ${index + 1}`}
-                        description={`Latitude: ${marker[0].toFixed(5)} Longitude: ${marker[1].toFixed(5)}`}
+                        description={marker && marker[0] != null && marker[1] != null ? `Latitude: ${marker[0].toFixed(5)} Longitude: ${marker[1].toFixed(5)}` : "Invalid marker"}
                     />
                 </List.Item>
             )}

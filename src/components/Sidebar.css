@@ -34,3 +34,18 @@
     flex-direction: column;
     gap: 10px;
 }
+
+.mission-button {
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    font-weight: bold;
+    height: 2rem;
+    transition: transform 0.1s ease, background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.mission-button:active {
+    transform: scale(0.96);
+    background-color: #f2f2f2;
+}

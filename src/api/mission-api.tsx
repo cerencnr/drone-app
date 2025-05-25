@@ -30,5 +30,5 @@ export const generateLawnmower = async (
 }
 
 export const clearMission = async () => {
-    return api.remove("/clear_mission");
+    return api.get("/clear_mission");
 }

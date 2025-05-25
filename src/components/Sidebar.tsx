@@ -10,6 +10,11 @@ import useStartLawnmowerMission from "../hooks/useStartLawnmowerMission";
 import RocketLaunchRoundedIcon from "@mui/icons-material/RocketLaunchRounded";
 import CurrentStatus from "./CurrentStatus";
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import {
+    notifyStartGenericMissionError,
+    notifyStartGenericMissionSuccess, notifyStartLawnmowerMissionError,
+    notifyStartLawnmowerMissionSuccess
+} from "../utils/notify";
 
 interface SidebarProps {
     isAdding: boolean;
@@ -29,6 +34,7 @@ interface SidebarProps {
         remainingPercent: number;
         voltage: number;
     } | null;
+    onStartSession: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isAdding,
@@ -39,10 +45,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
                                            battery,
                                            armed,
                                            position,
-                                           flightMode
+                                           flightMode,
+                                           onStartSession
 }) => {
-    const [isMissionSectionExpanded, setIsMissionSectionExpanded] = useState(true);
-    const [isCurrentStatusSectionExpanded, setIsCurrentStatusSectionExpanded] = useState(true);
+    const [isMissionSectionExpanded, setIsMissionSectionExpanded] = useState(false);
+    const [isCurrentStatusSectionExpanded, setIsCurrentStatusSectionExpanded] = useState(false);
     const {start: startGenericMission} = useStartMission();
     const {start: startLawnmowerMission} = useStartLawnmowerMission();
 
@@ -67,6 +74,36 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
             console.error("Clear mission failed:", err);
         }
     }
+
+    const handleStartGenericMission = async () => {
+        try {
+            const response = await startGenericMission();
+            if (response?.status === 200) {
+                notifyStartGenericMissionSuccess();
+                onStartSession();
+            } else {
+                notifyStartGenericMissionError();
+            }
+        } catch (err) {
+            console.error("Failed to start generic mission:", err);
+            notifyStartGenericMissionError();
+        }
+    };
+
+    const handleStartLawnmowerMission = async () => {
+        try {
+            const response = await startLawnmowerMission(markers);
+            if (response?.status === 200) {
+                notifyStartLawnmowerMissionSuccess();
+                onStartSession();
+            } else {
+                notifyStartLawnmowerMissionError();
+            }
+        } catch (err) {
+            console.error("Failed to start lawnmower mission:", err);
+            notifyStartLawnmowerMissionError();
+        }
+    };
 
     return (
         <div className="sidebar">
@@ -97,23 +134,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
                         </Tooltip>
                     </div>
                     <WaypointList markers={markers} onWaypointClick={focusOnWaypoint} isLoading={isLoading}/>
-                    <button style={{
-                        border: "none",
-                        borderRadius: "5px",
-                        backgroundColor: "white",
-                        fontWeight: "bold",
-                        height: "2rem",
-                    }}
-                            onClick={startGenericMission}>Start Generic Mission
+                    <button className={"mission-button"}
+                            onClick={handleStartGenericMission}
+                    >
+                        Start Generic Mission
                     </button>
-                    <button style={{
-                        border: "none",
-                        borderRadius: "5px",
-                        backgroundColor: "white",
-                        fontWeight: "bold",
-                        height: "2rem",
-                    }}
-                            onClick={startLawnmowerMission}>Start Lawnmower Mission
+                    <button className={"mission-button"}
+                            onClick={handleStartLawnmowerMission}
+                    >
+                        Start Lawnmower Mission
                     </button>
                 </div>
             )}

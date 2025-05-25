@@ -34,7 +34,7 @@ const CurrentStatus: React.FC<CurrentStatusProps> = ({
         {
             key: '2',
             label: 'Height',
-            children: <p style={{fontWeight: "bold", margin: "0"}}>{position?.absoluteAltitude?.toFixed(2) || 'N/A'}</p>,
+            children: <p style={{fontWeight: "bold", margin: "0"}}>{position?.absoluteAltitude || 'N/A'}</p>,
         },
         {
             key: '3',
@@ -47,7 +47,7 @@ const CurrentStatus: React.FC<CurrentStatusProps> = ({
             children: (
                 <p style={{fontWeight: "bold", margin: "0"}}>
                     {battery?.remainingPercent != null
-                        ? (battery.remainingPercent).toFixed(0) + "%"
+                        ? (battery.remainingPercent) + "%"
                         : "N/A"}
                 </p>
             ),
@@ -57,7 +57,7 @@ const CurrentStatus: React.FC<CurrentStatusProps> = ({
             label: 'Total Distance',
             children: (
                 <p style={{fontWeight: "bold", margin: "0"}}>
-                {markers.length > 1
+                    {markers && markers.length > 1
                         ? (horizontalDistanceTraveled(markers) / 1000).toFixed(2) + " km"
                         : "N/A"}
                 </p>
@@ -70,7 +70,7 @@ const CurrentStatus: React.FC<CurrentStatusProps> = ({
             bordered
             items={items}
             layout="vertical"
-            style={{ backgroundColor: "#ffffff", borderRadius: "8px" }}
+            style={{backgroundColor: "#ffffff", borderRadius: "8px" }}
         />
     );
 };

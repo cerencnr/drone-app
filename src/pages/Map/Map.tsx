@@ -52,7 +52,12 @@ const Map: React.FC = () => {
     const [isFocusing, setIsFocusing] = useState(false);
     const { data: missions, isLoading } = useMission();
     const [ isTelemetryExpanded, setIsTelemetryExpanded ] = useState(false);
+    const [hidePolylineTemporarily, setHidePolylineTemporarily] = useState(false);
 
+    const startSession = () => {
+        setIsTracking(true);
+        setIsFocusing(true);
+    };
 
     useEffect(() => {
         if (position) {
@@ -114,6 +119,13 @@ const Map: React.FC = () => {
 
     const toggleFocus = () => {
         setIsFocusing((prev) => !prev);
+
+        if (!isFocusing) {
+            setHidePolylineTemporarily(true);
+            setTimeout(() => {
+                setHidePolylineTemporarily(false);
+            }, 200);
+        }
     };
 
     const toggleTelemetry = () => {
@@ -136,6 +148,7 @@ const Map: React.FC = () => {
                      flightMode={flightMode}
                      armed={armed}
                      position={position}
+                     onStartSession={startSession}
             />
             <div className="map-container">
 
@@ -167,7 +180,7 @@ const Map: React.FC = () => {
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
                     <MapEvents addMarker={addMarker} isAdding={isAdding} setIsAdding={setIsAdding}/>
-                    <Polyline positions={markers}/>
+                    {!hidePolylineTemporarily && <Polyline positions={markers} />}
                     {showPolygon && markers.length >= 3 && (
                         <Polygon positions={markers}/>
                     )}
@@ -191,14 +204,20 @@ const Map: React.FC = () => {
                             }}
                         >
                             <Popup>
-                                <div style={{display: "flex", flexDirection: "column", alignItems: "center", gap:"2px"}}>
-                                    {position[0].toFixed(5)}, {position[1].toFixed(5)}
-                                    <br/>
-                                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px" }}>
+                                    {position && (
+                                        <>
+                                            {position[0]}, {position[1]}
+                                        </>
+                                    )}
+                                    <br />
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
                                         <Tooltip placement={"left"} title={"Delete Marker"}>
-                                            <button onClick={() => deleteMarker(index)}
-                                                    style={{background: "transparent", border: "none", padding: "2px"}}>
-                                                <WrongLocationOutlinedIcon style={{color: "red"}}/>
+                                            <button
+                                                onClick={() => deleteMarker(index)}
+                                                style={{ background: "transparent", border: "none", padding: "2px" }}
+                                            >
+                                                <WrongLocationOutlinedIcon style={{ color: "red" }} />
                                             </button>
                                         </Tooltip>
                                     </div>
@@ -210,9 +229,13 @@ const Map: React.FC = () => {
                         <Popup>
                             Drone Position
                             <br/>
-                            Latitude: {dronePosition[0].toFixed(5)}
-                            <br/>
-                            Longitude: {dronePosition[1].toFixed(5)}
+                            {dronePosition && (
+                                <>
+                                    Latitude: {dronePosition[0]}
+                                    <br />
+                                    Longitude: {dronePosition[1]}
+                                </>
+                            )}
                         </Popup>
                     </Marker>
                     <Polyline positions={droneTrajectory} color="blue"/>

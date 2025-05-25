@@ -14,16 +14,16 @@ export type GPSResponse = {
 }
 
 export type MissionResponse = {
-    altitude: number,
-    camera_action: string,
-    gimbal_pitch: number,
-    gimbal_yaw: number,
-    is_fly_through: boolean,
-    latitude: number,
-    loiter_time: number,
-    longitude: number,
-    speed: number,
-    yaw: number
+        altitude: number,
+        camera_action: string,
+        gimbal_pitch: number,
+        gimbal_yaw: number,
+        is_fly_through: boolean,
+        latitude: number,
+        loiter_time: number,
+        longitude: number,
+        speed: number,
+        yaw: number
 }
 
 export type MissionItemResponse = {
@@ -31,12 +31,11 @@ export type MissionItemResponse = {
 }
 
 export type LawnmowerMissionResponse = {
-    polygon: [
+    polygon:
         {
             latitude: number;
             longitude: number;
-        }
-    ],
+        }[],
     spacing: number;
     scouting_altitude: number;
     execution_altitude: number;

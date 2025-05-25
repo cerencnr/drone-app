@@ -4,15 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="feat: added telemetry data component">
-      <change afterPath="$PROJECT_DIR$/src/utils/horizontalDistanceTraveled.ts" afterDir="false" />
+    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="feat: added notifications, bug fixing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/axios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/axios.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/mission-api.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/mission-api.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/models.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/CurrentStatus.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CurrentStatus.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Telemetry.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Telemetry.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/WaypointList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/WaypointList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useMarkers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useMarkers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useMission.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useMission.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useStartLawnmowerMission.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useStartLawnmowerMission.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useStartMission.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useStartMission.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Map/Map.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/calculateDistance.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/notify.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/notify.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +157,11 @@
       <workItem from="1746894122546" duration="7762000" />
       <workItem from="1747563865322" duration="1388000" />
       <workItem from="1747611090099" duration="770000" />
-      <workItem from="1747668712644" duration="7367000" />
+      <workItem from="1747668712644" duration="7914000" />
+      <workItem from="1747750322052" duration="1538000" />
+      <workItem from="1747752131325" duration="5879000" />
+      <workItem from="1748089688855" duration="4454000" />
+      <workItem from="1748111319307" duration="11250000" />
     </task>
     <task id="LOCAL-00001" summary="improve ui/ux">
       <option name="closed" value="true" />
@@ -176,7 +187,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747672866116</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat: added current status section to sidebar, calculating total horizontal distance">
+      <option name="closed" value="true" />
+      <created>1747683161723</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1747683161723</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,6 +229,8 @@
     <MESSAGE value="feat: added lawnmower endpoints" />
     <MESSAGE value="feat: added waypoint api upload" />
     <MESSAGE value="feat: added telemetry data component" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: added telemetry data component" />
+    <MESSAGE value="feat: added current status section to sidebar, calculating total horizontal distance" />
+    <MESSAGE value="feat: added notifications, bug fixing" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: added notifications, bug fixing" />
   </component>
 </project>

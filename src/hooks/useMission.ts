@@ -12,23 +12,25 @@ export default function useMission() {
 
 
     const [waypoint, setWaypoint] = useState<{
-        "altitude": number,
-        "camera_action": string,
-        "gimbal_pitch": number,
-        "gimbal_yaw": number,
-        "is_fly_through": boolean,
-        "latitude": number,
-        "loiter_time": number,
-        "longitude": number,
-        "speed": number,
-        "yaw": number
-    }[] | null>([]);
+        "waypoints": {
+                "altitude": number,
+                "camera_action": string,
+                "gimbal_pitch": number,
+                "gimbal_yaw": number,
+                "is_fly_through": boolean,
+                "latitude": number,
+                "loiter_time": number,
+                "longitude": number,
+                "speed": number,
+                "yaw": number
+            }[]
+        } | null>();
 
     useEffect(() => {
         if (response) {
-            console.log("API response:", response);
+            console.log("API mission response:", response);
 
-            if (response.waypoints) {
+            if (response.waypoints && response.waypoints[0].altitude !== null) {
                 setWaypoint(response.waypoints);
             } else {
                 console.error("Error: waypoints is undefined");
