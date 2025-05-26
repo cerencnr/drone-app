@@ -8,10 +8,10 @@ export type GPSResponse = {
         flightMode: number;
         heading: number;
         position: {
-            absoluteAltitude: number;
+            abs_alt: number;
             latitude: number;
             longitude: number;
-            relativeAltitude: number;
+            rel_alt: number;
         }
     }
 
@@ -24,10 +24,10 @@ export type GPSResponse = {
         flightMode: number;
         heading: number;
         position: {
-            absoluteAltitude: number;
+            abs_alt: number;
             latitude: number;
             longitude: number;
-            relativeAltitude: number;
+            rel_alt: number;
         }
     }
 }

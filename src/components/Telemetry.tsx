@@ -12,7 +12,7 @@ const Telemetry: React.FC<{ position: GPSResponse['drone']['position']}> = ({ po
         <div className={"telemetry-container"}
              style={{display: "flex", flexDirection: "column", gap: "10px"}}>
             <Card title="Telemetry" size="small" style={{width: 200}}>
-                <p>Altitude: {position?.absoluteAltitude}</p>
+                <p>Altitude: {position?.abs_alt}</p>
                 <p>Latitude: {position?.latitude}</p>
                 <p>Longitude: {position?.longitude}</p>
             </Card>

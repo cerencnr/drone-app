@@ -15,6 +15,7 @@ import TrackingButton from "../../components/TrackingButton";
 import {notifyTelemetryWarning} from "../../utils/notify";
 import 'leaflet-rotatedmarker';
 import droneArrowhead from "../../assets/drone-arrowhead.svg";
+import roverArrowhead from "../../assets/rover-arrowhead.svg";
 
 
 const markerIcon = new L.Icon({
@@ -33,6 +34,14 @@ const droneIcon = new L.Icon({
     popupAnchor: [0, -25],
 });
 
+const roverIcon = new L.Icon({
+    iconUrl: roverArrowhead,
+    iconSize: [50, 50],
+    iconAnchor: [25, 25],
+    popupAnchor: [0, -25],
+});
+
+
 const MapEvents: React.FC<{ addMarker: (pos: [number, number]) => void; isAdding: boolean; setIsAdding: React.Dispatch<React.SetStateAction<boolean>> }> = ({ addMarker, isAdding, setIsAdding }) => {
     useMapEvent("click", (e: L.LeafletMouseEvent) => {
         if (isAdding) {
@@ -45,9 +54,9 @@ const MapEvents: React.FC<{ addMarker: (pos: [number, number]) => void; isAdding
 const Map: React.FC = () => {
     const { markers, addMarker, deleteMarker, updateMarker } = useMarkers();
     const [isTracking, setIsTracking] = useState(false);
-    //const { position, battery, flightMode, armed, heading } = useGPS(isTracking);
     const { drone, rover } = useGPS(isTracking);
     const [dronePosition, setDronePosition] = useState<[number, number]>([0, 0]);
+    const [roverPosition, setRoverPosition] = useState<[number, number]>([0, 0]);
     const [droneTrajectory, setDroneTrajectory] = useState<[number, number][]>([]);
     const [isAdding, setIsAdding] = useState(false);
     const mapRef = useRef<L.Map | null>(null);
@@ -56,15 +65,25 @@ const Map: React.FC = () => {
     const { data: missions, isLoading } = useMission();
     const [ isTelemetryExpanded, setIsTelemetryExpanded ] = useState(false);
     const [hidePolylineTemporarily, setHidePolylineTemporarily] = useState(false);
-    const [arrowHeading, setArrowHeading] = useState(0);
+    const [droneArrowHeading, setDroneArrowHeading] = useState(0);
+    const [roverArrowHeading, setRoverArrowHeading] = useState(0);
     const droneMarkerRef = useRef<L.Marker | null>(null);
+    const roverMarkerRef = useRef<L.Marker | null>(null);
+
 
     useEffect(() => {
         if (droneMarkerRef.current) {
-            (droneMarkerRef.current as any).setRotationAngle(arrowHeading);
+            (droneMarkerRef.current as any).setRotationAngle(droneArrowHeading);
             (droneMarkerRef.current as any).setRotationOrigin("center center");
         }
     }, [drone?.heading]);
+
+    useEffect(() => {
+        if (roverMarkerRef.current) {
+            (roverMarkerRef.current as any).setRotationAngle(roverArrowHeading);
+            (roverMarkerRef.current as any).setRotationOrigin("center center");
+        }
+    }, [rover?.heading]);
 
     const startSession = () => {
         setIsTracking(true);
@@ -76,9 +95,17 @@ const Map: React.FC = () => {
             const newDronePosition: [number, number] = [drone?.position?.latitude, drone?.position?.longitude];
             setDronePosition(newDronePosition);
             setDroneTrajectory((prevTrajectory) => [...prevTrajectory, newDronePosition]);
-            setArrowHeading(drone?.heading ?? 0);
+            setDroneArrowHeading(drone?.heading ?? 0);
         }
     }, [drone?.position]);
+
+    useEffect(() => {
+        if (rover?.position && rover?.heading) {
+            const newRoverPosition: [number, number] = [rover?.position?.latitude, rover?.position?.longitude];
+            setRoverPosition(newRoverPosition);
+            setRoverArrowHeading(rover?.heading ?? 0);
+        }
+    }, [rover?.position]);
 
     useEffect(() => {
         if (mapRef.current && dronePosition[0] !== 0 && dronePosition[1] !== 0 && isFocusing) {
@@ -249,7 +276,22 @@ const Map: React.FC = () => {
                             Drone Position<br />
                             Lat: {dronePosition[0]} <br />
                             Lon: {dronePosition[1]} <br />
-                            Heading: {arrowHeading.toFixed(1)}°
+                            Heading: {droneArrowHeading.toFixed(1)}°
+                        </Popup>
+                    </Marker>
+
+                    <Marker
+                        position={roverPosition}
+                        icon={roverIcon}
+                        ref={(ref) => {
+                            if (ref) droneMarkerRef.current = ref;
+                        }}
+                    >
+                        <Popup>
+                            Rover Position<br />
+                            Lat: {dronePosition[0]} <br />
+                            Lon: {dronePosition[1]} <br />
+                            Heading: {roverArrowHeading.toFixed(1)}°
                         </Popup>
                     </Marker>
 

@@ -4,16 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="feat: added notifications, bug fixing">
-      <change afterPath="$PROJECT_DIR$/src/assets/drone-arrowhead.svg" afterDir="false" />
+    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="feat: GPS response changed, now also retrieving rover data">
+      <change afterPath="$PROJECT_DIR$/src/assets/rover-arrowhead.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/axios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/axios.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/models.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Telemetry.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Telemetry.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useGPS.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useGPS.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useMission.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useMission.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useStartMission.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useStartMission.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Map/Map.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +61,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;feature/refactor&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/cerencinar/Desktop/Development/drone-app&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/cerencinar/Desktop/Development/drone-app/src/assets&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -74,6 +73,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/assets" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/assets" />
       <recent name="$PROJECT_DIR$/src" />
@@ -158,7 +160,10 @@
       <workItem from="1747750322052" duration="1538000" />
       <workItem from="1747752131325" duration="5879000" />
       <workItem from="1748089688855" duration="4454000" />
-      <workItem from="1748111319307" duration="15368000" />
+      <workItem from="1748111319307" duration="17803000" />
+      <workItem from="1748203252100" duration="1768000" />
+      <workItem from="1748241957824" duration="3756000" />
+      <workItem from="1748280398216" duration="177000" />
     </task>
     <task id="LOCAL-00001" summary="improve ui/ux">
       <option name="closed" value="true" />
@@ -200,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748188640144</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat: GPS response changed, now also retrieving rover data">
+      <option name="closed" value="true" />
+      <created>1748195510269</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1748195510269</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -236,6 +249,7 @@
     <MESSAGE value="feat: added telemetry data component" />
     <MESSAGE value="feat: added current status section to sidebar, calculating total horizontal distance" />
     <MESSAGE value="feat: added notifications, bug fixing" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: added notifications, bug fixing" />
+    <MESSAGE value="feat: GPS response changed, now also retrieving rover data" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: GPS response changed, now also retrieving rover data" />
   </component>
 </project>

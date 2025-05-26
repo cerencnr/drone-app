@@ -25,10 +25,10 @@ interface SidebarProps {
     isLoading: boolean;
     armed: boolean | null;
     position: {
-        absoluteAltitude: number;
+        abs_alt: number;
         latitude: number;
         longitude: number;
-        relativeAltitude: number;
+        rel_alt: number;
     } | null;
     flightMode: number | null;
     battery: {

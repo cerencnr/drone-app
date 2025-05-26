@@ -1,6 +1,8 @@
 import {useState} from "react";
 import {startMission} from "../api/mission-api";
 
+
+//TODO: add timeout
 export default function useStartMission() {
     const [isStarting, setIsStarting] = useState(false);
     const [error, setError] = useState<Error | null>(null);
