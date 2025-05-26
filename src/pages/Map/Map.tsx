@@ -58,10 +58,11 @@ const Map: React.FC = () => {
     const [dronePosition, setDronePosition] = useState<[number, number]>([0, 0]);
     const [roverPosition, setRoverPosition] = useState<[number, number]>([0, 0]);
     const [droneTrajectory, setDroneTrajectory] = useState<[number, number][]>([]);
+    const [roverTrajectory, setRoverTrajectory] = useState<[number, number][]>([]);
     const [isAdding, setIsAdding] = useState(false);
     const mapRef = useRef<L.Map | null>(null);
     const [showPolygon, setShowPolygon] = useState(false);
-    const [isFocusing, setIsFocusing] = useState(false);
+    const [focusTarget, setFocusTarget] = useState<"none" | "drone" | "rover">("none");
     const { data: missions, isLoading } = useMission();
     const [ isTelemetryExpanded, setIsTelemetryExpanded ] = useState(false);
     const [hidePolylineTemporarily, setHidePolylineTemporarily] = useState(false);
@@ -87,7 +88,7 @@ const Map: React.FC = () => {
 
     const startSession = () => {
         setIsTracking(true);
-        setIsFocusing(true);
+        setFocusTarget("drone");
     };
 
     useEffect(() => {
@@ -103,20 +104,27 @@ const Map: React.FC = () => {
         if (rover?.position && rover?.heading) {
             const newRoverPosition: [number, number] = [rover?.position?.latitude, rover?.position?.longitude];
             setRoverPosition(newRoverPosition);
+            setDroneTrajectory((prevTrajectory) => [...prevTrajectory, newRoverPosition]);
             setRoverArrowHeading(rover?.heading ?? 0);
         }
     }, [rover?.position]);
 
     useEffect(() => {
-        if (mapRef.current && dronePosition[0] !== 0 && dronePosition[1] !== 0 && isFocusing) {
+        if (mapRef.current && dronePosition[0] !== 0 && dronePosition[1] !== 0 && (focusTarget === "drone")) {
             mapRef.current.flyTo(dronePosition, 18);
         }
-    }, [dronePosition, isFocusing]);
+    }, [dronePosition, focusTarget]);
+
+    useEffect(() => {
+        if (mapRef.current && roverPosition[0] !== 0 && roverPosition[1] !== 0 && (focusTarget === "rover")) {
+            mapRef.current.flyTo(roverPosition, 18);
+        }
+    }, [roverPosition, focusTarget]);
 
     const toggleTracking = () => {
         setIsTracking((prev) => {
             const newTrackingState = !prev;
-            setIsFocusing(newTrackingState);
+            setFocusTarget("drone");
             if (!newTrackingState) {
                 setDronePosition([0, 0]);
                 setDroneTrajectory([]);
@@ -158,9 +166,15 @@ const Map: React.FC = () => {
     };
 
     const toggleFocus = () => {
-        setIsFocusing((prev) => !prev);
+        if (focusTarget === "none") {
+            setFocusTarget("drone");
+        } else if (focusTarget === "drone") {
+            setFocusTarget("rover");
+        } else {
+            setFocusTarget("none");
+        }
 
-        if (!isFocusing) {
+        if (!focusTarget) {
             setHidePolylineTemporarily(true);
             setTimeout(() => {
                 setHidePolylineTemporarily(false);
@@ -195,7 +209,7 @@ const Map: React.FC = () => {
                 <Menu
                     showPolygon={showPolygon}
                     createPolygon={createPolygon}
-                    isFocusing={isFocusing}
+                    focusTarget={focusTarget}
                     toggleFocus={toggleFocus}
                     isTracking={isTracking}
                     toggleTelemetry={toggleTelemetry}
@@ -295,7 +309,8 @@ const Map: React.FC = () => {
                         </Popup>
                     </Marker>
 
-                    <Polyline positions={droneTrajectory} color="blue"/>
+                    <Polyline positions={droneTrajectory} color="red"/>
+                    <Polyline positions={roverTrajectory} color="blue"/>
                 </MapContainer>
                 <TrackingButton isTracking={isTracking} toggleTracking={toggleTracking} />
             </div>

@@ -14,7 +14,7 @@ import {GPSResponse} from "../api/models";
 interface MenuProps {
     showPolygon: boolean;
     createPolygon: () => void;
-    isFocusing: boolean;
+    focusTarget: "none" | "drone" | "rover";
     toggleFocus: () => void;
     isTracking: boolean;
     toggleTelemetry: () => void;
@@ -25,7 +25,7 @@ interface MenuProps {
 const Menu: React.FC<MenuProps> = ({
                                        showPolygon,
                                        createPolygon,
-                                       isFocusing,
+                                       focusTarget,
                                        toggleFocus,
                                        isTracking,
                                        toggleTelemetry,
@@ -67,9 +67,12 @@ const Menu: React.FC<MenuProps> = ({
                         </button>
                     </Tooltip>
 
-                    <Tooltip placement={"left"} title={isFocusing ? "Stop Focusing on Drone" : "Focus on Drone"}>
+                    <Tooltip placement={"left"} title={
+                        (focusTarget === "none") ? "Focus on Drone" :
+                        (focusTarget === "drone") ? "Focus on Rover" : "Stop Focusing"}
+                    >
                         <button className="menu-button" onClick={toggleFocus}
-                                style={isFocusing ? {backgroundColor: "#c9c9c9"} : {}}>
+                                style={(focusTarget !== "none") ? {backgroundColor: "#c9c9c9"} : {}}>
                             <CenterFocusWeakRoundedIcon/>
                         </button>
                     </Tooltip>

@@ -72,10 +72,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
     const removeAllMissions = async () => {
         try {
             await clearMission();
+            mutate();
         } catch (err) {
             console.error("Clear mission failed:", err);
         }
-        mutate();
     }
 
     const handleStartGenericMission = async () => {

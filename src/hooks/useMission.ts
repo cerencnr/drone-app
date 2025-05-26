@@ -30,7 +30,7 @@ export default function useMission() {
         if (response) {
             console.log("API mission response:", response);
 
-            if (response?.waypoints && response?.waypoints[0].altitude !== null) {
+            if (response?.waypoints && response?.waypoints[0]?.altitude !== null) {
                 setWaypoint(response?.waypoints);
             } else {
                 console.error("Error: waypoints is undefined");
