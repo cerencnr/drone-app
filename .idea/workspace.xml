@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="fix: change altitude attribute names">
+    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="feat: added rover trajectory">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/axios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/axios.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useMission.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useMission.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Telemetry.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Telemetry.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Map/Map.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Map/Map.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Map/Map.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -161,6 +161,13 @@
       <workItem from="1748203252100" duration="1768000" />
       <workItem from="1748241957824" duration="3756000" />
       <workItem from="1748280398216" duration="5400000" />
+      <workItem from="1748300711733" duration="171000" />
+      <workItem from="1748336914011" duration="2683000" />
+      <workItem from="1748415997349" duration="14000" />
+      <workItem from="1748598410513" duration="2889000" />
+      <workItem from="1748609214562" duration="8000" />
+      <workItem from="1748884314710" duration="1233000" />
+      <workItem from="1748887609553" duration="402000" />
     </task>
     <task id="LOCAL-00001" summary="improve ui/ux">
       <option name="closed" value="true" />
@@ -218,7 +225,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748280996175</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat: added rover trajectory">
+      <option name="closed" value="true" />
+      <created>1748300866798</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1748300866798</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,6 +271,7 @@
     <MESSAGE value="feat: added notifications, bug fixing" />
     <MESSAGE value="feat: GPS response changed, now also retrieving rover data" />
     <MESSAGE value="fix: change altitude attribute names" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: change altitude attribute names" />
+    <MESSAGE value="feat: added rover trajectory" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: added rover trajectory" />
   </component>
 </project>

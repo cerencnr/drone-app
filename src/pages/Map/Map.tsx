@@ -39,6 +39,7 @@ const roverIcon = new L.Icon({
     iconSize: [50, 50],
     iconAnchor: [25, 25],
     popupAnchor: [0, -25],
+    className: "faded-icon"
 });
 
 
@@ -77,14 +78,14 @@ const Map: React.FC = () => {
             (droneMarkerRef.current as any).setRotationAngle(droneArrowHeading);
             (droneMarkerRef.current as any).setRotationOrigin("center center");
         }
-    }, [drone?.heading]);
+    }, [droneArrowHeading]);
 
     useEffect(() => {
         if (roverMarkerRef.current) {
             (roverMarkerRef.current as any).setRotationAngle(roverArrowHeading);
             (roverMarkerRef.current as any).setRotationOrigin("center center");
         }
-    }, [rover?.heading]);
+    }, [roverArrowHeading]);
 
     const startSession = () => {
         setIsTracking(true);
@@ -104,7 +105,7 @@ const Map: React.FC = () => {
         if (rover?.position && rover?.heading) {
             const newRoverPosition: [number, number] = [rover?.position?.latitude, rover?.position?.longitude];
             setRoverPosition(newRoverPosition);
-            setDroneTrajectory((prevTrajectory) => [...prevTrajectory, newRoverPosition]);
+            setRoverTrajectory((prevTrajectory) => [...prevTrajectory, newRoverPosition]);
             setRoverArrowHeading(rover?.heading ?? 0);
         }
     }, [rover?.position]);
@@ -219,6 +220,7 @@ const Map: React.FC = () => {
                 <MapContainer
                     center={[37.9838, 23.7275]}
                     zoom={5}
+                    maxZoom={20}
                     style={{height: "100%", width: "100%"}}
                     whenReady={() => {
                         if (mapRef.current) {
@@ -230,7 +232,9 @@ const Map: React.FC = () => {
                 >
                     <SearchBar onLocationFound={onLocationFound}/>
                     <TileLayer
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        maxZoom={20}
+                        maxNativeZoom={18}
+                        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
                     <MapEvents addMarker={addMarker} isAdding={isAdding} setIsAdding={setIsAdding}/>
@@ -298,7 +302,7 @@ const Map: React.FC = () => {
                         position={roverPosition}
                         icon={roverIcon}
                         ref={(ref) => {
-                            if (ref) droneMarkerRef.current = ref;
+                            if (ref) roverMarkerRef.current = ref;
                         }}
                     >
                         <Popup>
@@ -308,9 +312,10 @@ const Map: React.FC = () => {
                             Heading: {roverArrowHeading.toFixed(1)}°
                         </Popup>
                     </Marker>
-
-                    <Polyline positions={droneTrajectory} color="red"/>
-                    <Polyline positions={roverTrajectory} color="blue"/>
+                    {/* Drone trajectory */}
+                    {!hidePolylineTemporarily && <Polyline positions={droneTrajectory} color="red" />}
+                    {/* Rover trajectory */}
+                    {!hidePolylineTemporarily && <Polyline positions={roverTrajectory} color="blue" />}
                 </MapContainer>
                 <TrackingButton isTracking={isTracking} toggleTracking={toggleTracking} />
             </div>

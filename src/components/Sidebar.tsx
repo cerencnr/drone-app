@@ -122,28 +122,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
                     <p style={{fontWeight: "bold", fontSize: "0.8rem", paddingTop: "0", margin: "0"}}>Create Plan</p>
                     <div style={{display: "flex", justifyContent: "space-between"}}>
                         <AddWaypointButton isAdding={isAdding} handleToggleAdding={handleToggleAdding}/>
-                        <Tooltip title={"Remove All Missions"} placement={"right"}>
-                            <button
-                                style={{
-                                    border: "none",
-                                    borderRadius: "5px",
-                                    backgroundColor: "white",
-                                    fontWeight: "bold",
-                                    height: "2rem",
-                                    alignItems: "center",
-                                    display: "flex",
-                                }}
-                                onClick={removeAllMissions}>
-                                <DeleteForeverRoundedIcon/>
-                            </button>
-                        </Tooltip>
+
                     </div>
                     <WaypointList markers={markers} onWaypointClick={focusOnWaypoint} isLoading={isLoading}/>
-                    <button className={"mission-button"}
-                            onClick={handleStartGenericMission}
-                    >
-                        Start Generic Mission
-                    </button>
                     <button className={"mission-button"}
                             onClick={handleStartLawnmowerMission}
                     >

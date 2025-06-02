@@ -19,3 +19,7 @@
     border: #f0f0f0 solid 2px;
     position: relative;
 }
+
+.faded-icon {
+    opacity: 0.6;
+}

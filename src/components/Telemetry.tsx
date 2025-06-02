@@ -11,10 +11,10 @@ const Telemetry: React.FC<{ position: GPSResponse['drone']['position']}> = ({ po
     return (
         <div className={"telemetry-container"}
              style={{display: "flex", flexDirection: "column", gap: "10px"}}>
-            <Card title="Telemetry" size="small" style={{width: 200}}>
-                <p>Altitude: {position?.abs_alt}</p>
-                <p>Latitude: {position?.latitude}</p>
-                <p>Longitude: {position?.longitude}</p>
+            <Card title="UAV Telemetry" size="small" style={{width: 200}}>
+                <p>Altitude: {position?.abs_alt.toFixed(5)}</p>
+                <p>Latitude: {position?.latitude.toFixed(5)}</p>
+                <p>Longitude: {position?.longitude.toFixed(5)}</p>
             </Card>
         </div>
     );
