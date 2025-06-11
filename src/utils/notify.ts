@@ -40,6 +40,16 @@ const START_GENERIC_MISSION_ERROR_MESSAGE = {
     description: "Failed to start generic mission.",
 }
 
+const GENERATE_LAWNMOWER_SUCCESS_MESSAGE = {
+    message: "Lawnmower Mission Generated",
+    description: "The lawnmower mission has been successfully generated.",
+}
+
+const GENERATE_LAWNMOWER_ERROR_MESSAGE = {
+    message: "Lawnmower Mission Generation Error",
+    description: "Failed to generate lawnmower mission.",
+};
+
 export function notifyReturnSuccess() {
     notification.success({
         ...DEFAULT_NOTIFICATION_CONFIG,
@@ -86,5 +96,19 @@ export function notifyStartGenericMissionError() {
     notification.error({
         ...DEFAULT_NOTIFICATION_CONFIG,
         ...START_GENERIC_MISSION_ERROR_MESSAGE,
+    });
+}
+
+export function notifyGenerateLawnmowerMissionSuccess() {
+    notification.success({
+        ...DEFAULT_NOTIFICATION_CONFIG,
+        ...GENERATE_LAWNMOWER_SUCCESS_MESSAGE,
+    });
+}
+
+export function notifyGenerateLawnmowerMissionError() {
+    notification.error({
+        ...DEFAULT_NOTIFICATION_CONFIG,
+        ...GENERATE_LAWNMOWER_ERROR_MESSAGE,
     });
 }

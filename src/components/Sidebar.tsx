@@ -4,18 +4,21 @@ import NavigationRoundedIcon from '@mui/icons-material/NavigationRounded';
 import Tooltip from "antd/es/tooltip";
 import AddWaypointButton from "./AddWaypointButton";
 import WaypointList from "./WaypointList";
-import {clearMission} from "../api/mission-api";
+import {clearMission, startLawnmowerMission} from "../api/mission-api";
 import useStartMission from "../hooks/useStartMission";
 import useStartLawnmowerMission from "../hooks/useStartLawnmowerMission";
 import RocketLaunchRoundedIcon from "@mui/icons-material/RocketLaunchRounded";
 import CurrentStatus from "./CurrentStatus";
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import {
+    notifyGenerateLawnmowerMissionError, notifyGenerateLawnmowerMissionSuccess,
     notifyStartGenericMissionError,
     notifyStartGenericMissionSuccess, notifyStartLawnmowerMissionError,
     notifyStartLawnmowerMissionSuccess
 } from "../utils/notify";
 import useMission from "../hooks/useMission";
+import {generateLawnmower} from "../api/mission-api";
+import {LawnmowerMissionResponse} from "../api/models";
 
 interface SidebarProps {
     isAdding: boolean;
@@ -52,7 +55,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
     const [isMissionSectionExpanded, setIsMissionSectionExpanded] = useState(false);
     const [isCurrentStatusSectionExpanded, setIsCurrentStatusSectionExpanded] = useState(false);
     const {start: startGenericMission} = useStartMission();
-    const {start: startLawnmowerMission} = useStartLawnmowerMission();
     const { mutate } = useMission();
 
     const toggleExpandMissionSection = () => {
@@ -96,7 +98,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
 
     const handleStartLawnmowerMission = async () => {
         try {
-            const response = await startLawnmowerMission(markers);
+            const response = await startLawnmowerMission();
             if (response?.status === 200) {
                 notifyStartLawnmowerMissionSuccess();
                 onStartSession();
@@ -107,6 +109,36 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
         } catch (err) {
             console.error("Failed to start lawnmower mission:", err);
             notifyStartLawnmowerMissionError();
+        }
+    };
+
+    const handleGenerateLawnmowerMission = async () => {
+        if (!markers || markers.length < 3) {
+            console.error("Polygon needs at least 3 points.");
+            notifyGenerateLawnmowerMissionError();
+            return;
+        }
+
+        const polygon = markers.map(([lat, lng]) => ({
+            latitude: lat,
+            longitude: lng
+        }));
+
+        const lawnmowerMission: LawnmowerMissionResponse = {
+            polygon,
+            spacing: 10,
+            scouting_altitude: 20,
+            execution_altitude: 15,
+            speed: 5,
+        };
+
+        try {
+            await generateLawnmower(lawnmowerMission);
+            notifyGenerateLawnmowerMissionSuccess();
+            mutate();
+        } catch (err) {
+            console.error("Failed to generate lawnmower mission:", err);
+            notifyGenerateLawnmowerMissionError();
         }
     };
 
@@ -125,6 +157,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdding,
 
                     </div>
                     <WaypointList markers={markers} onWaypointClick={focusOnWaypoint} isLoading={isLoading}/>
+                    <button className={"mission-button"}
+                            onClick={handleGenerateLawnmowerMission}
+                    >
+                        Generate Lawnmower Mission
+                    </button>
                     <button className={"mission-button"}
                             onClick={handleStartLawnmowerMission}
                     >

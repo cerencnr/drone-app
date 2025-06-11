@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="feat: added rover trajectory">
+    <list default="true" id="102c70be-9624-4bf0-a720-44cb8e7e6b5f" name="Changes" comment="fix: solved drone and rover trajectory issue, changed map to satellite view, increased max zoom">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/axios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/axios.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Telemetry.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Telemetry.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Map/Map.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Map/Map.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Map/Map.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useStartLawnmowerMission.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useStartLawnmowerMission.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/notify.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/notify.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +165,8 @@
       <workItem from="1748598410513" duration="2889000" />
       <workItem from="1748609214562" duration="8000" />
       <workItem from="1748884314710" duration="1233000" />
-      <workItem from="1748887609553" duration="402000" />
+      <workItem from="1748887609553" duration="1250000" />
+      <workItem from="1749660014569" duration="1335000" />
     </task>
     <task id="LOCAL-00001" summary="improve ui/ux">
       <option name="closed" value="true" />
@@ -233,7 +232,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748300866798</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fix: solved drone and rover trajectory issue, changed map to satellite view, increased max zoom">
+      <option name="closed" value="true" />
+      <created>1748888123352</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1748888123352</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -272,6 +279,7 @@
     <MESSAGE value="feat: GPS response changed, now also retrieving rover data" />
     <MESSAGE value="fix: change altitude attribute names" />
     <MESSAGE value="feat: added rover trajectory" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: added rover trajectory" />
+    <MESSAGE value="fix: solved drone and rover trajectory issue, changed map to satellite view, increased max zoom" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: solved drone and rover trajectory issue, changed map to satellite view, increased max zoom" />
   </component>
 </project>
