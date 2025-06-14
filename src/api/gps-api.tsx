@@ -9,15 +9,15 @@ export const getMockGPS = async () => {
     return {
         "armed": true,
         "battery": {
-            "remaining_percent": 100,
+            "remainingPercent": 100,
             "voltage": 12.5
         },
         "flightMode": 1,
         "position": {
-            "absolute_altitude": 100,
+            "absoluteAltitude": 100,
             "latitude": 37.7749,
             "longitude": -122.4194,
-            "relative_altitude": 50
+            "relativeAltitude": 50
         }
     }
 }

@@ -1,29 +1,48 @@
 export type GPSResponse = {
-    armed: boolean;
-    battery: {
-        remaining_percent: number;
-        voltage: number;
+    drone: {
+        armed: boolean;
+        battery: {
+            remainingPercent: number;
+            voltage: number;
+        }
+        flightMode: number;
+        heading: number;
+        position: {
+            abs_alt: number;
+            latitude: number;
+            longitude: number;
+            rel_alt: number;
+        }
     }
-    flight_mode: number;
-    position: {
-        absolute_altitude: number;
-        latitude: number;
-        longitude: number;
-        relative_altitude: number;
+
+    rover: {
+        armed: boolean;
+        battery: {
+            remainingPercent: number;
+            voltage: number;
+        }
+        flightMode: number;
+        heading: number;
+        position: {
+            abs_alt: number;
+            latitude: number;
+            longitude: number;
+            rel_alt: number;
+        }
     }
 }
 
 export type MissionResponse = {
-    altitude: number,
-    camera_action: string,
-    gimbal_pitch: number,
-    gimbal_yaw: number,
-    is_fly_through: boolean,
-    latitude: number,
-    loiter_time: number,
-    longitude: number,
-    speed: number,
-    yaw: number
+        altitude: number,
+        camera_action: string,
+        gimbal_pitch: number,
+        gimbal_yaw: number,
+        is_fly_through: boolean,
+        latitude: number,
+        loiter_time: number,
+        longitude: number,
+        speed: number,
+        yaw: number
 }
 
 export type MissionItemResponse = {
@@ -31,12 +50,11 @@ export type MissionItemResponse = {
 }
 
 export type LawnmowerMissionResponse = {
-    polygon: [
+    polygon:
         {
             latitude: number;
             longitude: number;
-        }
-    ],
+        }[],
     spacing: number;
     scouting_altitude: number;
     execution_altitude: number;

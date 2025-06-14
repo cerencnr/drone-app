@@ -9,8 +9,8 @@
 .menu-items {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     gap: 10px;
+    height: calc(100vh - 55px);
 }
 
 .menu-button {

@@ -12,6 +12,10 @@ import Tooltip from "antd/es/tooltip";
 import useMission from "../../hooks/useMission";
 import useMarkers from "../../hooks/useMarkers";
 import TrackingButton from "../../components/TrackingButton";
+import {notifyTelemetryWarning} from "../../utils/notify";
+import 'leaflet-rotatedmarker';
+import droneArrowhead from "../../assets/drone-arrowhead.svg";
+import roverArrowhead from "../../assets/rover-arrowhead.svg";
 
 
 const markerIcon = new L.Icon({
@@ -24,11 +28,20 @@ const markerIcon = new L.Icon({
 });
 
 const droneIcon = new L.Icon({
-    iconUrl: "https://svgsilh.com/svg/2025680.svg",
+    iconUrl: droneArrowhead,
     iconSize: [50, 50],
     iconAnchor: [25, 25],
     popupAnchor: [0, -25],
 });
+
+const roverIcon = new L.Icon({
+    iconUrl: roverArrowhead,
+    iconSize: [50, 50],
+    iconAnchor: [25, 25],
+    popupAnchor: [0, -25],
+    className: "faded-icon"
+});
+
 
 const MapEvents: React.FC<{ addMarker: (pos: [number, number]) => void; isAdding: boolean; setIsAdding: React.Dispatch<React.SetStateAction<boolean>> }> = ({ addMarker, isAdding, setIsAdding }) => {
     useMapEvent("click", (e: L.LeafletMouseEvent) => {
@@ -42,35 +55,77 @@ const MapEvents: React.FC<{ addMarker: (pos: [number, number]) => void; isAdding
 const Map: React.FC = () => {
     const { markers, addMarker, deleteMarker, updateMarker } = useMarkers();
     const [isTracking, setIsTracking] = useState(false);
-    const { position } = useGPS(isTracking);
+    const { drone, rover } = useGPS(isTracking);
     const [dronePosition, setDronePosition] = useState<[number, number]>([0, 0]);
+    const [roverPosition, setRoverPosition] = useState<[number, number]>([0, 0]);
     const [droneTrajectory, setDroneTrajectory] = useState<[number, number][]>([]);
+    const [roverTrajectory, setRoverTrajectory] = useState<[number, number][]>([]);
     const [isAdding, setIsAdding] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(false);
     const mapRef = useRef<L.Map | null>(null);
     const [showPolygon, setShowPolygon] = useState(false);
-    const [isFocusing, setIsFocusing] = useState(false);
+    const [focusTarget, setFocusTarget] = useState<"none" | "drone" | "rover">("none");
     const { data: missions, isLoading } = useMission();
+    const [ isTelemetryExpanded, setIsTelemetryExpanded ] = useState(false);
+    const [hidePolylineTemporarily, setHidePolylineTemporarily] = useState(false);
+    const [droneArrowHeading, setDroneArrowHeading] = useState(0);
+    const [roverArrowHeading, setRoverArrowHeading] = useState(0);
+    const droneMarkerRef = useRef<L.Marker | null>(null);
+    const roverMarkerRef = useRef<L.Marker | null>(null);
 
 
     useEffect(() => {
-        if (position) {
-            const newDronePosition: [number, number] = [position?.latitude, position?.longitude];
+        if (droneMarkerRef.current) {
+            (droneMarkerRef.current as any).setRotationAngle(droneArrowHeading);
+            (droneMarkerRef.current as any).setRotationOrigin("center center");
+        }
+    }, [droneArrowHeading]);
+
+    useEffect(() => {
+        if (roverMarkerRef.current) {
+            (roverMarkerRef.current as any).setRotationAngle(roverArrowHeading);
+            (roverMarkerRef.current as any).setRotationOrigin("center center");
+        }
+    }, [roverArrowHeading]);
+
+    const startSession = () => {
+        setIsTracking(true);
+        setFocusTarget("drone");
+    };
+
+    useEffect(() => {
+        if (drone?.position && drone?.heading) {
+            const newDronePosition: [number, number] = [drone?.position?.latitude, drone?.position?.longitude];
             setDronePosition(newDronePosition);
             setDroneTrajectory((prevTrajectory) => [...prevTrajectory, newDronePosition]);
+            setDroneArrowHeading(drone?.heading ?? 0);
         }
-    }, [position]);
+    }, [drone?.position]);
 
     useEffect(() => {
-        if (mapRef.current && dronePosition[0] !== 0 && dronePosition[1] !== 0 && isFocusing) {
+        if (rover?.position && rover?.heading) {
+            const newRoverPosition: [number, number] = [rover?.position?.latitude, rover?.position?.longitude];
+            setRoverPosition(newRoverPosition);
+            setRoverTrajectory((prevTrajectory) => [...prevTrajectory, newRoverPosition]);
+            setRoverArrowHeading(rover?.heading ?? 0);
+        }
+    }, [rover?.position]);
+
+    useEffect(() => {
+        if (mapRef.current && dronePosition[0] !== 0 && dronePosition[1] !== 0 && (focusTarget === "drone")) {
             mapRef.current.flyTo(dronePosition, 18);
         }
-    }, [dronePosition, isFocusing]);
+    }, [dronePosition, focusTarget]);
+
+    useEffect(() => {
+        if (mapRef.current && roverPosition[0] !== 0 && roverPosition[1] !== 0 && (focusTarget === "rover")) {
+            mapRef.current.flyTo(roverPosition, 18);
+        }
+    }, [roverPosition, focusTarget]);
 
     const toggleTracking = () => {
         setIsTracking((prev) => {
             const newTrackingState = !prev;
-            setIsFocusing(newTrackingState);
+            setFocusTarget("drone");
             if (!newTrackingState) {
                 setDronePosition([0, 0]);
                 setDroneTrajectory([]);
@@ -97,10 +152,6 @@ const Map: React.FC = () => {
         setIsAdding((prev) => !prev);
     };
 
-    const toggleExpand = () => {
-        setIsExpanded((prev) => !prev);
-    };
-
     const focusOnWaypoint = (position: [number, number]) => {
         if (mapRef.current) {
             mapRef.current.flyTo(position, 16);
@@ -116,8 +167,30 @@ const Map: React.FC = () => {
     };
 
     const toggleFocus = () => {
-        setIsFocusing((prev) => !prev);
+        if (focusTarget === "none") {
+            setFocusTarget("drone");
+        } else if (focusTarget === "drone") {
+            setFocusTarget("rover");
+        } else {
+            setFocusTarget("none");
+        }
+
+        if (!focusTarget) {
+            setHidePolylineTemporarily(true);
+            setTimeout(() => {
+                setHidePolylineTemporarily(false);
+            }, 200);
+        }
     };
+
+    const toggleTelemetry = () => {
+        if (!drone?.position) {
+            notifyTelemetryWarning();
+            return;
+        }
+        setIsTelemetryExpanded((prev) => !prev);
+    }
+
 
     return (
         <div className="app">
@@ -125,25 +198,29 @@ const Map: React.FC = () => {
                      handleToggleAdding={handleToggleAdding}
                      markers={markers}
                      focusOnWaypoint={focusOnWaypoint}
-                     isLoading={isLoading}/>
+                     isLoading={isLoading}
+                     battery={drone?.battery ?? null}
+                     flightMode={drone?.flightMode ?? null}
+                     armed={drone?.armed ?? null}
+                     position={drone?.position ?? null}
+                     onStartSession={startSession}
+            />
             <div className="map-container">
 
                 <Menu
-                    isAdding={isAdding}
-                    handleToggleAdding={handleToggleAdding}
-                    isExpanded={isExpanded}
-                    toggleExpand={toggleExpand}
-                    markers={markers}
-                    focusOnWaypoint={focusOnWaypoint}
                     showPolygon={showPolygon}
                     createPolygon={createPolygon}
-                    isFocusing={isFocusing}
+                    focusTarget={focusTarget}
                     toggleFocus={toggleFocus}
                     isTracking={isTracking}
+                    toggleTelemetry={toggleTelemetry}
+                    isTelemetryExpanded={isTelemetryExpanded}
+                    position={drone?.position ?? null}
                 />
                 <MapContainer
                     center={[37.9838, 23.7275]}
                     zoom={5}
+                    maxZoom={20}
                     style={{height: "100%", width: "100%"}}
                     whenReady={() => {
                         if (mapRef.current) {
@@ -155,11 +232,13 @@ const Map: React.FC = () => {
                 >
                     <SearchBar onLocationFound={onLocationFound}/>
                     <TileLayer
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        maxZoom={20}
+                        maxNativeZoom={18}
+                        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
                     <MapEvents addMarker={addMarker} isAdding={isAdding} setIsAdding={setIsAdding}/>
-                    <Polyline positions={markers}/>
+                    {!hidePolylineTemporarily && <Polyline positions={markers} />}
                     {showPolygon && markers.length >= 3 && (
                         <Polygon positions={markers}/>
                     )}
@@ -183,14 +262,20 @@ const Map: React.FC = () => {
                             }}
                         >
                             <Popup>
-                                <div style={{display: "flex", flexDirection: "column", alignItems: "center", gap:"2px"}}>
-                                    {position[0].toFixed(5)}, {position[1].toFixed(5)}
-                                    <br/>
-                                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px" }}>
+                                    {position && (
+                                        <>
+                                            {position[0]}, {position[1]}
+                                        </>
+                                    )}
+                                    <br />
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
                                         <Tooltip placement={"left"} title={"Delete Marker"}>
-                                            <button onClick={() => deleteMarker(index)}
-                                                    style={{background: "transparent", border: "none", padding: "2px"}}>
-                                                <WrongLocationOutlinedIcon style={{color: "red"}}/>
+                                            <button
+                                                onClick={() => deleteMarker(index)}
+                                                style={{ background: "transparent", border: "none", padding: "2px" }}
+                                            >
+                                                <WrongLocationOutlinedIcon style={{ color: "red" }} />
                                             </button>
                                         </Tooltip>
                                     </div>
@@ -198,16 +283,39 @@ const Map: React.FC = () => {
                             </Popup>
                         </Marker>
                     ))}
-                    <Marker position={dronePosition} icon={droneIcon}>
+                    <Marker
+                        position={dronePosition}
+                        icon={droneIcon}
+                        ref={(ref) => {
+                            if (ref) droneMarkerRef.current = ref;
+                        }}
+                    >
                         <Popup>
-                            Drone Position
-                            <br/>
-                            Latitude: {dronePosition[0].toFixed(5)}
-                            <br/>
-                            Longitude: {dronePosition[1].toFixed(5)}
+                            Drone Position<br />
+                            Lat: {dronePosition[0]} <br />
+                            Lon: {dronePosition[1]} <br />
+                            Heading: {droneArrowHeading.toFixed(1)}°
                         </Popup>
                     </Marker>
-                    <Polyline positions={droneTrajectory} color="blue"/>
+
+                    <Marker
+                        position={roverPosition}
+                        icon={roverIcon}
+                        ref={(ref) => {
+                            if (ref) roverMarkerRef.current = ref;
+                        }}
+                    >
+                        <Popup>
+                            Rover Position<br />
+                            Lat: {dronePosition[0]} <br />
+                            Lon: {dronePosition[1]} <br />
+                            Heading: {roverArrowHeading.toFixed(1)}°
+                        </Popup>
+                    </Marker>
+                    {/* Drone trajectory */}
+                    {!hidePolylineTemporarily && <Polyline positions={droneTrajectory} color="red" />}
+                    {/* Rover trajectory */}
+                    {!hidePolylineTemporarily && <Polyline positions={roverTrajectory} color="blue" />}
                 </MapContainer>
                 <TrackingButton isTracking={isTracking} toggleTracking={toggleTracking} />
             </div>

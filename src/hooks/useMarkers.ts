@@ -1,40 +1,39 @@
 // hooks/useMarkers.ts
 import { useState, useEffect } from "react";
 import { MissionResponse } from "../api/models";
-import { uploadMission, getMission } from "../api/mission-api";
+import { uploadMission } from "../api/mission-api";
+import useMission from "./useMission";
 
 export default function useMarkers() {
     const [markers, setMarkers] = useState<[number, number][]>([]);
 
-    // Fetch initial mission on mount
+    // Fetch initial mission using useMission hook
+    const { data: missionData } = useMission();
+
     useEffect(() => {
-        async function fetchMission() {
-            try {
-                const data = await getMission();
-                if (Array.isArray(data)) {
-                    const missionMarkers = data.map((item: MissionResponse) => [item.latitude, item.longitude] as [number, number]);
-                    setMarkers(missionMarkers);
-                }
-            } catch (err) {
-                console.error("Failed to fetch mission:", err);
-            }
+        if (missionData && Array.isArray(missionData)) {
+            console.log("Fetched mission data:", missionData);
+            const missionMarkers = missionData.map((item: MissionResponse) => [item.latitude, item.longitude] as [number, number]);
+            console.log("missionMarkers", missionMarkers);
+            setMarkers(missionMarkers);
         }
-        fetchMission();
-    }, []);
+    }, [missionData]);
 
     const convertToMissionItems = (coords: [number, number][]): MissionResponse[] => {
-        return coords.map(([lat, lng]) => ({
-            altitude: 0,
-            camera_action: "none",
-            gimbal_pitch: 0,
-            gimbal_yaw: 0,
-            is_fly_through: false,
-            latitude: lat,
-            loiter_time: 0,
-            longitude: lng,
-            speed: 0,
-            yaw: 0,
-        }));
+        return coords.map(([lat, lng]) => (
+            {
+                altitude: 0,
+                camera_action: "none",
+                gimbal_pitch: 0,
+                gimbal_yaw: 0,
+                is_fly_through: false,
+                latitude: lat,
+                loiter_time: 0,
+                longitude: lng,
+                speed: 0,
+                yaw: 0,
+            }
+        ));
     };
 
     const syncWithBackend = async (updatedMarkers: [number, number][]) => {
@@ -70,6 +69,6 @@ export default function useMarkers() {
         addMarker,
         deleteMarker,
         updateMarker,
-        setMarkers, // optional if needed manually
+        setMarkers,
     };
 }
